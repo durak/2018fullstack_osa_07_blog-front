@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -6,6 +8,7 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
+import { notify } from './reducers/notificationReducer'
 
 
 class App extends React.Component {
@@ -16,8 +19,7 @@ class App extends React.Component {
       username: '',
       password: '',
       user: null,
-      error: null,
-      message: null
+      error: null
     }
     this.newBlogForm = React.createRef()
   }
@@ -58,12 +60,7 @@ class App extends React.Component {
     } catch (exception) {
 
       console.log(exception)
-      this.setState({
-        error: 'wrong username or passowrd'
-      })
-      setTimeout(() => {
-        this.setState({ error: null })
-      }, 5000)
+      this.props.notify('wrong username or password', 'error')
     }
   }
 
@@ -84,20 +81,15 @@ class App extends React.Component {
 
 
   addBlog = async (newBlog) => {
+
     try {
       this.newBlogForm.current.toggleVisibility()
       const savedBlog = await blogService.create(newBlog)
 
       const msg = `a new blog ${savedBlog.title} by ${savedBlog.author} added`
 
-      this.setState({
-        blogs: this.state.blogs.concat(savedBlog),
-        message: msg
-      })
+      this.props.notify(msg,  'message' )
 
-      setTimeout(() => {
-        this.setState({ message: null })
-      }, 5000)
     } catch (exception) {
 
       console.log(exception)
@@ -143,7 +135,7 @@ class App extends React.Component {
       sortedBlogs.sort((a, b) => {
         return b.likes - a.likes
       })
-      
+
       return (
         <div>
           <h2>blogs</h2>
@@ -156,8 +148,8 @@ class App extends React.Component {
 
     return (
       <div>
-        <Notification message={this.state.error} type="error" />
-        <Notification message={this.state.message} type="message" />
+
+        <Notification  />
 
         {this.state.user === null ?
           <LoginForm
@@ -185,4 +177,7 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default connect(
+  null,
+  { notify }
+)(App)
