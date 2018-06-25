@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.0.17",
+    "redux": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -17,7 +19,12 @@
   },
   "proxy": "http://localhost:3003",
   "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "deep-freeze": "0.0.1",
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1"
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^5.0.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-react": "^7.10.0"
   }
 }
