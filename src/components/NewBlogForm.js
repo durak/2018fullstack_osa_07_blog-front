@@ -3,7 +3,7 @@ import React from 'react'
 
 class NewBlogForm extends React.Component {
   static propTypes = {
-    addBlog: PropTypes.func.isRequired    
+    addBlog: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -50,7 +50,7 @@ class NewBlogForm extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div>
             title
-              <input
+            <input
               type="text"
               name="title"
               value={this.state.title}
@@ -59,7 +59,7 @@ class NewBlogForm extends React.Component {
           </div>
           <div>
             author
-              <input
+            <input
               type="text"
               name="author"
               value={this.state.author}
@@ -68,7 +68,7 @@ class NewBlogForm extends React.Component {
           </div>
           <div>
             url
-              <input
+            <input
               type="text"
               name="url"
               value={this.state.url}

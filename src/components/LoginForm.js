@@ -8,7 +8,7 @@ const LoginForm = ({ handleSubmit, handleChange, username, password }) => {
       <form onSubmit={handleSubmit}>
         <div>
           Käyttäjänimi
-        <input
+          <input
             type="text"
             name="username"
             value={username}
@@ -18,7 +18,7 @@ const LoginForm = ({ handleSubmit, handleChange, username, password }) => {
 
         <div>
           Salasana
-        <input
+          <input
             type="password"
             name="password"
             value={password}

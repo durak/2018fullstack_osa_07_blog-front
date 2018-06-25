@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Blog from './components/Blog'
+
+import BlogList from './components/BlogList'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
@@ -25,6 +26,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log('mount')
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
@@ -71,12 +73,11 @@ class App extends React.Component {
     const usrname = this.state.user.username
 
     this.setState({
-      user: null,
-      message: `user ${usrname} logged out`
+      user: null
     })
-    setTimeout(() => {
-      this.setState({ message: null })
-    }, 5000)
+
+    this.props.notify(`user ${usrname} logged out`, 'message')
+
   }
 
 
@@ -87,6 +88,10 @@ class App extends React.Component {
       const savedBlog = await blogService.create(newBlog)
 
       const msg = `a new blog ${savedBlog.title} by ${savedBlog.author} added`
+
+      this.setState({
+        blogs: this.state.blogs.concat(savedBlog)
+      })
 
       this.props.notify(msg,  'message' )
 
@@ -130,21 +135,6 @@ class App extends React.Component {
       </div>
     )
 
-    const listBlogs = () => {
-      let sortedBlogs = [].concat(this.state.blogs)
-      sortedBlogs.sort((a, b) => {
-        return b.likes - a.likes
-      })
-
-      return (
-        <div>
-          <h2>blogs</h2>
-          {sortedBlogs.map(blog =>
-            <Blog key={blog.id} blog={blog} handleLike={this.likeBlog} handleDestroy={this.destroyBlog} user={this.state.user} />
-          )}
-        </div>
-      )
-    }
 
     return (
       <div>
@@ -163,7 +153,8 @@ class App extends React.Component {
 
           <div>
             {logoutForm()}
-            {listBlogs()}
+
+            <BlogList blogs={this.state.blogs} likeBlog={this.likeBlog} destroyBlog={this.destroyBlog} user={this.state.user} />
             <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
               <NewBlogForm addBlog={this.addBlog} />
             </Togglable>

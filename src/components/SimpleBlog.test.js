@@ -15,7 +15,7 @@ describe('<Simpleblog />', () => {
       likes: 99
     }
 
-    mockHandler = jest.fn()    
+    mockHandler = jest.fn()
 
     blogComponent = shallow(<SimpleBlog blog={blog} onClick={mockHandler} />)
   })
@@ -23,7 +23,7 @@ describe('<Simpleblog />', () => {
   it('renders blog title, author and likes', () => {
     const authorTitleDiv = blogComponent.find('.authorTitle')
     const likesDiv = blogComponent.find('.likes')
-    
+
     expect(authorTitleDiv.text()).toContain(blog.title)
     expect(likesDiv.text()).toContain(blog.likes)
   })
