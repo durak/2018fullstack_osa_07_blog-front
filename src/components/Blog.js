@@ -1,84 +1,97 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 
-class Blog extends React.Component {
-  static propTypes = {
-    handleDestroy: PropTypes.func.isRequired,
-    handleLike: PropTypes.func.isRequired,
-    blog: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
+import { blogLike, blogDestroy, blogToggleVisibility } from '../reducers/blogReducer'
+import { notify } from '../reducers/notificationReducer'
+
+const Blog = (props) => {
+  let blog = { ...props.blog }
+
+  const toggleVisibility = () => {
+    props.blogToggleVisibility(props.blog)
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      fullView: false
-    }
-
+  const like = () => {
+    let blog = { ...props.blog }
+    props.blogLike(blog)
+    props.notify(`You liked ${blog.title} by ${blog.author}`, 'message')
   }
 
-  toggleVisibility = () => {
-    this.setState({ fullView: !this.state.fullView })
-  }
-
-  like = () => {
-    let blog = { ...this.props.blog }
-
-    blog.likes = blog.likes + 1
-    this.props.handleLike(blog)
-  }
-
-  destroy = () => {
-    let blog = this.props.blog
+  const destroy = ()  => {
+    let blog = props.blog
     if (window.confirm(`delete ${blog.title} by ${blog.author}?`)) {
-      this.props.handleDestroy(blog)
+      props.blogDestroy(blog)
+      props.notify(`Blog ${blog.title} by ${blog.author} deleted`, 'message')
     }
   }
 
-  render() {
-    const blog = this.props.blog
 
-    const blogStyle = {
-      paddingTop: 10,
-      paddingLeft: 2,
-      border: 'solid',
-      borderWidth: 1,
-      marginBottom: 5
-    }
+  const blog = props.blog
 
-    const hideWhenVisible = { display: this.state.fullView ? 'none' : '' }
-    const showWhenVisible = { display: this.state.fullView ? '' : 'none' }
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
+  }
 
-    const destroyVisible =
-      { display: blog.user && (blog.user.username !== this.props.user.username) ? 'none' : '' }
+  const hideWhenVisible = { display: props.blog.fullView ? 'none' : '' }
+  const showWhenVisible = { display: props.blog.fullView ? '' : 'none' }
+
+  const destroyVisible =
+      { display: blog.user && (blog.user.username !== props.user.username) ? 'none' : '' }
 
 
-    return (
-      <div style={blogStyle} >
-        <div style={hideWhenVisible} className="minimized">
-          <p className="clickable" onClick={this.toggleVisibility}>{blog.title} {blog.author}</p>
-        </div>
-        <div style={showWhenVisible} className="maximized">
-          <p className="clickable" onClick={this.toggleVisibility}>{blog.title} {blog.author}</p>
-          <a href={blog.url}>{blog.url}</a>
-          <p>
+  return (
+    <div style={blogStyle} >
+      <div style={hideWhenVisible} className="minimized">
+        <p className="clickable" onClick={toggleVisibility}>{blog.title} {blog.author}</p>
+      </div>
+      <div style={showWhenVisible} className="maximized">
+        <p className="clickable" onClick={toggleVisibility}>{blog.title} {blog.author}</p>
+        <a href={blog.url}>{blog.url}</a>
+        <p>
             likes: {blog.likes}
-            <button onClick={this.like}>like</button>
-          </p>
-          <p className="addedBy">added by {blog.user ? blog.user.name : 'anonymous'}</p>
-          <div className="destroy" style={destroyVisible}>
-            <p><button onClick={this.destroy}>delete</button></p>
-          </div>
+          <button onClick={like}>like</button>
+        </p>
+        <p className="addedBy">added by {blog.user ? blog.user.name : 'anonymous'}</p>
+        <div className="destroy" style={destroyVisible}>
+          <p><button onClick={destroy}>delete</button></p>
         </div>
       </div>
-    )
+    </div>
+  )
+}
+
+
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
   }
 }
 
-/* const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>
-) */
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleLike: (blog) => () => {
+      const msg = `you liked ${blog.title} by ${blog.author}`
+      dispatch(blogLike(blog))
+      dispatch(notify(msg, 'message'))
+    }
+  }
+}
 
-export default Blog
+export default connect(
+  null,
+  { blogLike, blogDestroy, blogToggleVisibility, notify }
+)(Blog)
+
+
+/*   static propTypes = {
+    blogDestroy: PropTypes.func.isRequired,
+    blogLike: PropTypes.func.isRequired,
+    blog: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
+  } */

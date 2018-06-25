@@ -5,7 +5,7 @@ class Togglable extends React.Component {
   static propTypes = {
     buttonLabel: PropTypes.string.isRequired
   }
-  
+
   constructor(props) {
     super(props)
     this.state = {
@@ -14,7 +14,7 @@ class Togglable extends React.Component {
   }
 
   toggleVisibility = () => {
-    this.setState({visible: !this.state.visible})
+    this.setState({ visible: !this.state.visible })
   }
 
   render() {

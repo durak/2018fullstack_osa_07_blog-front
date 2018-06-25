@@ -10,6 +10,7 @@ import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
 import { notify } from './reducers/notificationReducer'
+import { blogsInit } from './reducers/blogReducer'
 
 
 class App extends React.Component {
@@ -30,6 +31,8 @@ class App extends React.Component {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
+
+    this.props.blogsInit()
 
     const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
     if (loggedUserJSON) {
@@ -101,30 +104,6 @@ class App extends React.Component {
     }
   }
 
-  likeBlog = async (likedBlog) => {
-    try {
-      const savedBlog = await blogService.update(likedBlog)
-
-      this.setState({
-        blogs: this.state.blogs.map(blog => blog.id !== savedBlog.id ? blog : savedBlog)
-      })
-
-    } catch (exception) {
-      console.log(exception)
-    }
-  }
-
-  destroyBlog = async (blog) => {
-    try {
-      const response = await blogService.destroy(blog)
-      console.log(response)
-      this.setState({
-        blogs: this.state.blogs.filter(b => b.id !== blog.id)
-      })
-    } catch (exception){
-      console.log(exception)
-    }
-  }
 
   render() {
 
@@ -154,7 +133,7 @@ class App extends React.Component {
           <div>
             {logoutForm()}
 
-            <BlogList blogs={this.state.blogs} likeBlog={this.likeBlog} destroyBlog={this.destroyBlog} user={this.state.user} />
+            <BlogList  user={this.state.user} />
             <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
               <NewBlogForm addBlog={this.addBlog} />
             </Togglable>
@@ -170,5 +149,5 @@ class App extends React.Component {
 
 export default connect(
   null,
-  { notify }
+  { notify, blogsInit }
 )(App)

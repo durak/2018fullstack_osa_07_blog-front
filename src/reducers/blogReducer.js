@@ -8,6 +8,10 @@ const blogReducer = (state = [], action) => {
     return state.filter(b => b.id !== action.id)
   case 'LIKE':
     return state.map(b => b.id !== action.blog.id ? b : action.blog)
+  case 'TOGGLE_FULLVIEW':{
+    console.log('toggle')
+    return state.map(b => b.id !== action.blog.id ? b : { ...action.blog, fullView: !action.blog.fullView })
+  }
   case 'INIT':
     return action.blogs
 
@@ -18,7 +22,7 @@ const blogReducer = (state = [], action) => {
 
 //------------ACTION CREATORS------------
 
-export const blogCreation = (newBlog) => {
+export const blogCreate = (newBlog) => {
   return async (dispatch) => {
     try {
       const savedBlog = await blogService.create(newBlog)
@@ -44,7 +48,7 @@ export const blogDestroy = (blogToDestroy) => {
 export const blogLike = (blogToLike) => {
   return async (dispatch) => {
     try {
-      const updatedBlog = await blogService.update(blogToLike)
+      const updatedBlog = await blogService.update({ ...blogToLike, likes: blogToLike.likes + 1 })
       dispatch({
         type: 'LIKE',
         blog: updatedBlog
@@ -63,6 +67,13 @@ export const blogsInit = () => {
     } catch (exception) {
       console.log(exception)
     }
+  }
+}
+
+export const blogToggleVisibility = (blog) => {
+  return {
+    type: 'TOGGLE_FULLVIEW',
+    blog
   }
 }
 

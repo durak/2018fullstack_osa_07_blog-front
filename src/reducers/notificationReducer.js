@@ -42,4 +42,5 @@ export const notify = (message, notificationType, seconds) => {
   }
 }
 
+
 export default notificationReducer

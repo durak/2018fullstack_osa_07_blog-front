@@ -1,27 +1,35 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import Blog from './Blog'
 
-const BlogList = ({ blogs, likeBlog, destroyBlog, user }) => {
-  let sortedBlogs = [].concat(blogs).sort((a, b) => {
-    return b.likes - a.likes
-  })
-  sortedBlogs.sort((a, b) => {
-    return b.likes - a.likes
-  })
+const BlogList = ({ blogs, user }) => (
 
-  return (
-    <div>
-      {sortedBlogs.map(blog =>
-        <Blog
-          key={blog.id}
-          blog={blog}
-          handleLike={likeBlog}
-          handleDestroy={destroyBlog}
-          user={user}
-        />
-      )}
-    </div>
-  )
+  <div>
+    {blogs.map(blog =>
+      <Blog
+        key={blog.id}
+        blog={blog}
+        user={user}
+      />
+    )}
+  </div>
+)
+
+
+const mapStateToProps = (state) => {
+  let sortedBlogs = []
+    .concat(state.blogs)
+    .sort((a, b) => {
+      return b.likes - a.likes
+    })
+
+  return {
+    blogs: sortedBlogs
+  }
 }
 
-export default BlogList
+
+export default connect(
+  mapStateToProps
+)(BlogList)
