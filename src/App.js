@@ -5,8 +5,10 @@ import blogService from './services/blogs'
 
 import { notify } from './reducers/notificationReducer'
 import { blogsInit } from './reducers/blogReducer'
+import { usersInit } from './reducers/userReducer'
 
 import LoginForm from './components/LoginForm'
+import UserList from './components/UserList'
 import BlogList from './components/BlogList'
 import NewBlogForm from './components/NewBlogForm'
 import Notification from './components/Notification'
@@ -25,10 +27,11 @@ class App extends React.Component {
     console.log('mount', this.props.user)
 
     this.props.blogsInit()
+    this.props.usersInit()
+
     if (this.props.user) {
       blogService.setToken(this.props.user.token)
     }
-
   }
 
   render() {
@@ -48,7 +51,15 @@ class App extends React.Component {
         <div>
           <p>{this.props.user.name} logged in</p>
           <LogOutButton />
-          <BlogList />
+          <div>
+            <h1>Users</h1>
+            <UserList />
+          </div>
+
+          <div>
+            <h1>Blogs</h1>
+            <BlogList />
+          </div>
           <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
             <NewBlogForm togglable={this.newBlogForm} />
           </Togglable>
@@ -66,5 +77,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { notify, blogsInit }
+  { notify, blogsInit, usersInit }
 )(App)

@@ -1,18 +1,19 @@
 import blogService from '../services/blogs'
+import { userUpdate } from './userReducer'
 
 const blogReducer = (state = [], action) => {
   switch (action.type) {
-  case 'CREATE':
+  case 'BLOG_CREATE':
     return state.concat(action.blog)
-  case 'DESTROY':
+  case 'BLOG_DESTROY':
     return state.filter(b => b.id !== action.id)
-  case 'LIKE':
+  case 'BLOG_LIKE':
     return state.map(b => b.id !== action.blog.id ? b : action.blog)
   case 'TOGGLE_FULLVIEW':{
     console.log('toggle')
     return state.map(b => b.id !== action.blog.id ? b : { ...action.blog, fullView: !action.blog.fullView })
   }
-  case 'INIT':
+  case 'BLOGS_INIT':
     return action.blogs
 
   default:
@@ -26,7 +27,8 @@ export const blogCreate = (newBlog) => {
   return async (dispatch) => {
     try {
       const savedBlog = await blogService.create(newBlog)
-      dispatch({ type:'CREATE', blog: savedBlog })
+      dispatch({ type:'BLOG_CREATE', blog: savedBlog })      
+      dispatch(userUpdate(savedBlog.user))
     } catch (exception) {
       console.log(exception)
     }
@@ -38,7 +40,8 @@ export const blogDestroy = (blogToDestroy) => {
     try {
       const response = await blogService.destroy(blogToDestroy)
       console.log('delete response:', response)
-      dispatch({ type: 'DESTROY', id: blogToDestroy.id })
+      dispatch({ type: 'BLOG_DESTROY', id: blogToDestroy.id })
+      dispatch(userUpdate(blogToDestroy.user))
     } catch (exception) {
       console.log(exception)
     }
@@ -50,7 +53,7 @@ export const blogLike = (blogToLike) => {
     try {
       const updatedBlog = await blogService.update({ ...blogToLike, likes: blogToLike.likes + 1 })
       dispatch({
-        type: 'LIKE',
+        type: 'BLOG_LIKE',
         blog: updatedBlog
       })
     } catch (exception) {
@@ -63,7 +66,7 @@ export const blogsInit = () => {
   return async (dispatch) => {
     try {
       const blogs = await blogService.getAll()
-      dispatch({ type: 'INIT', blogs })
+      dispatch({ type: 'BLOGS_INIT', blogs })
     } catch (exception) {
       console.log(exception)
     }

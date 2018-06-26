@@ -1,4 +1,5 @@
 import loginService from '../services/login'
+import blogService from '../services/blogs'
 import { notify } from './notificationReducer'
 
 const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
@@ -28,6 +29,8 @@ export const login = (username, password) => {
       })
 
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
+      blogService.setToken(user.token)
+
       dispatch({
         type: 'LOGIN',
         user
