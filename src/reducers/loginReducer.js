@@ -45,14 +45,13 @@ export const login = (username, password) => {
 }
 
 export const logout = (user) => {
-  return (dispatch) => {
-
+  return (dispatch) => {    
     window.localStorage.removeItem('loggedBlogAppUser')
     dispatch({
       type: 'LOGOUT'
     })
-
-    dispatch(notify(`user ${user.username} logged out`, 'message'))
+    blogService.setToken(null)
+    dispatch(notify(`user ${user.name} logged out`, 'message'))
   }
 }
 

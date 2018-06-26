@@ -1,4 +1,8 @@
 import React from 'react'
+import {
+  BrowserRouter as Router,
+  Route, Link
+} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import blogService from './services/blogs'
@@ -9,6 +13,7 @@ import { usersInit } from './reducers/userReducer'
 
 import LoginForm from './components/LoginForm'
 import UserList from './components/UserList'
+import User from './components/User'
 import BlogList from './components/BlogList'
 import NewBlogForm from './components/NewBlogForm'
 import Notification from './components/Notification'
@@ -24,14 +29,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mount', this.props.user)
-
     this.props.blogsInit()
     this.props.usersInit()
 
     if (this.props.user) {
       blogService.setToken(this.props.user.token)
     }
+
+    console.log('ComponentDidMount this.props.user', this.props.user)
+    console.log('ComponentDidMount blogService.token', blogService.token)
+    console.log('ComponentDidMount localstorage', JSON.parse(window.localStorage.getItem('loggedBlogAppUser')))
   }
 
   render() {
@@ -48,22 +55,30 @@ class App extends React.Component {
     return (
       <div>
         <Notification  />
-        <div>
-          <p>{this.props.user.name} logged in</p>
-          <LogOutButton />
+        <Router>
           <div>
-            <h1>Users</h1>
-            <UserList />
-          </div>
 
-          <div>
-            <h1>Blogs</h1>
-            <BlogList />
+            <div className="header">
+              <Link to="/">blogs</Link> &nbsp;
+              <Link to="/users">users</Link> &nbsp;
+              <p>{this.props.user.name} logged in</p>
+              <LogOutButton />
+            </div>
+
+            <div className="beaf">
+              <Route exact path="/" render={() => <BlogList />} />
+              <Route exact path="/users" render={() => <UserList />} />
+              <Route exact path="/users/:id" render={({ match }) =>
+                <User userId={match.params.id} />}
+              />
+            </div>
+
+            <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
+              <NewBlogForm togglable={this.newBlogForm} />
+            </Togglable>
+
           </div>
-          <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
-            <NewBlogForm togglable={this.newBlogForm} />
-          </Togglable>
-        </div>
+        </Router>
       </div>
     )
   }

@@ -24,9 +24,14 @@ const blogReducer = (state = [], action) => {
 //------------ACTION CREATORS------------
 
 export const blogCreate = (newBlog) => {
+  console.log('blogReducer input newBlog', newBlog)
   return async (dispatch) => {
     try {
       const savedBlog = await blogService.create(newBlog)
+
+      console.log('blogReducer output savedblog', savedBlog)
+      console.log('blogreducer calls userReducer with user', savedBlog.user)
+
       dispatch({ type:'BLOG_CREATE', blog: savedBlog })      
       dispatch(userUpdate(savedBlog.user))
     } catch (exception) {

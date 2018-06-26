@@ -19,7 +19,9 @@ const getAll = () => {
 }
 
 const getOne = async (userId) => {
+  console.log('userService receives from userReducer user ', userId)
   const response = await axios.get(`${baseUrl}/${userId}`)
+  console.log('userService receives from SERVER response ', response)
   return response.data
 }
 
