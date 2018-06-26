@@ -25,7 +25,8 @@ const mapStateToProps = (state) => {
     })
 
   return {
-    blogs: sortedBlogs
+    blogs: sortedBlogs,
+    user: state.loggedIn
   }
 }
 
