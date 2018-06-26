@@ -17,20 +17,15 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      blogs: [],
       username: '',
       password: '',
-      user: null,
-      error: null
+      user: null
     }
     this.newBlogForm = React.createRef()
   }
 
   componentDidMount() {
     console.log('mount')
-    blogService.getAll().then(blogs =>
-      this.setState({ blogs })
-    )
 
     this.props.blogsInit()
 
@@ -84,64 +79,36 @@ class App extends React.Component {
   }
 
 
-  addBlog = async (newBlog) => {
-
-    try {
-      this.newBlogForm.current.toggleVisibility()
-      const savedBlog = await blogService.create(newBlog)
-
-      const msg = `a new blog ${savedBlog.title} by ${savedBlog.author} added`
-
-      this.setState({
-        blogs: this.state.blogs.concat(savedBlog)
-      })
-
-      this.props.notify(msg,  'message' )
-
-    } catch (exception) {
-
-      console.log(exception)
-    }
-  }
-
-
   render() {
 
-    const logoutForm = () => (
-      <div>
-        <p>{this.state.user.name} logged in</p>
-        <button onClick={this.logout}> logout </button>
-      </div>
-    )
-
-
-    return (
-      <div>
-
-        <Notification  />
-
-        {this.state.user === null ?
+    if (this.state.user === null) {
+      return (
+        <div>
+          <Notification />
           <LoginForm
             handleSubmit={this.login}
             handleChange={this.handleFieldChange}
             username={this.state.username}
             password={this.state.password}
           />
+        </div>
+      )
+    }
 
-          :
-
+    return (
+      <div>
+        <Notification  />
+        <div>
           <div>
-            {logoutForm()}
-
-            <BlogList  user={this.state.user} />
-            <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
-              <NewBlogForm addBlog={this.addBlog} />
-            </Togglable>
+            <p>{this.state.user.name} logged in</p>
+            <button onClick={this.logout}> logout </button>
           </div>
-        }
 
-
-
+          <BlogList  user={this.state.user} />
+          <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
+            <NewBlogForm addBlog={this.addBlog} togglable={this.newBlogForm} />
+          </Togglable>
+        </div>
       </div>
     )
   }

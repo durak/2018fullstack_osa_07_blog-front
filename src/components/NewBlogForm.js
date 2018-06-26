@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
+
+import { blogCreate } from '../reducers/blogReducer'
+import { notify } from '../reducers/notificationReducer'
 
 class NewBlogForm extends React.Component {
   static propTypes = {
-    addBlog: PropTypes.func.isRequired
+    blogCreate: PropTypes.func.isRequired,
+    notify: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -35,7 +40,9 @@ class NewBlogForm extends React.Component {
       title: '', author: '', url: ''
     })
 
-    this.props.addBlog(newBlog)
+    this.props.blogCreate(newBlog)
+    this.props.notify(`a new blog ${newBlog.title} by ${newBlog.author} added`, 'message')
+    this.props.togglable.current.toggleVisibility()
   }
 
 
@@ -43,9 +50,6 @@ class NewBlogForm extends React.Component {
 
 
     return (
-
-
-
       <div>
         <form onSubmit={this.handleSubmit}>
           <div>
@@ -78,9 +82,11 @@ class NewBlogForm extends React.Component {
           <button type="submit">lisää</button>
         </form>
       </div>
-
     )
   }
 }
 
-export default NewBlogForm
+export default connect(
+  null,
+  { blogCreate, notify }
+)(NewBlogForm)
