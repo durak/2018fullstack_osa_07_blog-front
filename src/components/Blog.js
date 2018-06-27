@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { blogLike, blogDestroy } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
@@ -26,7 +27,7 @@ class Blog extends React.Component {
 
 
   render() {
-    const blog = this.props.blog
+    const blog = this.props.blog ? this.props.blog : this.props.blogs.find((b) => b.id === this.props.blogId)
 
     const blogStyle = {
       paddingTop: 10,
@@ -50,6 +51,7 @@ class Blog extends React.Component {
         </div>
         <div style={showWhenVisible} className="maximized">
           <p className="clickable" onClick={this.toggleVisibility}>{blog.title} {blog.author}</p>
+          <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
           <a href={blog.url}>{blog.url}</a>
           <p>
             likes: {blog.likes}
@@ -58,6 +60,13 @@ class Blog extends React.Component {
           <p className="addedBy">added by {blog.user ? blog.user.name : 'anonymous'}</p>
           <div className="destroy" style={destroyButtonVisible}>
             <p><button onClick={this.props.handleDestroy(blog)}>delete</button></p>
+          </div>
+          <div className="comments">
+            <h2>Comments</h2>
+            <ul>
+              {blog.comments.map((comment) =>
+                <li key={comment._id}>{comment.comment}</li>)}
+            </ul>
           </div>
         </div>
       </div>
@@ -86,8 +95,14 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    blogs: state.blogs,
+    user: state.loggedIn
+  }
+}
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Blog)
