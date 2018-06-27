@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { blogLike, blogDestroy } from '../reducers/blogReducer'
+import { blogLike, blogDestroy, blogAddComment } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
 
 class Blog extends React.Component {
@@ -17,7 +17,8 @@ class Blog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      fullView: false
+      fullView: false,
+      comment: ''
     }
   }
 
@@ -25,6 +26,17 @@ class Blog extends React.Component {
     this.setState({ fullView: !this.state.fullView })
   }
 
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.setState({ comment: '' })
+    this.props.handleComment(this.props.blog, this.state.comment)    
+  }
 
   render() {
     const blog = this.props.blog ? this.props.blog : this.props.blogs.find((b) => b.id === this.props.blogId)
@@ -67,6 +79,20 @@ class Blog extends React.Component {
               {blog.comments.map((comment) =>
                 <li key={comment._id}>{comment.comment}</li>)}
             </ul>
+
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <div>
+                  <input
+                    type="text"
+                    name="comment"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <button type="submit">add comment</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -88,10 +114,17 @@ const dispatchDestroy = (dispatch, blog) => {
   }
 }
 
+const dispatchComment = (dispatch, blog, comment) => {
+  const msg = `comment '${comment}' added to blog '${blog.title}'`
+  dispatch(blogAddComment(blog, comment))
+  dispatch(notify(msg, 'message'))
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     handleLike: (blog) => () => dispatchLike(dispatch, blog),
-    handleDestroy: (blog) => () => dispatchDestroy(dispatch, blog)
+    handleDestroy: (blog) => () => dispatchDestroy(dispatch, blog),
+    handleComment: (blog, comment) => dispatchComment(dispatch, blog, comment)
   }
 }
 

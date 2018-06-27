@@ -7,7 +7,7 @@ const blogReducer = (state = [], action) => {
     return state.concat(action.blog)
   case 'BLOG_DESTROY':
     return state.filter(b => b.id !== action.id)
-  case 'BLOG_LIKE':
+  case 'BLOG_UPDATE':
     return state.map(b => b.id !== action.blog.id ? b : action.blog)
   case 'TOGGLE_FULLVIEW':{
     console.log('toggle')
@@ -32,7 +32,7 @@ export const blogCreate = (newBlog) => {
       console.log('blogReducer output savedblog', savedBlog)
       console.log('blogreducer calls userReducer with user', savedBlog.user)
 
-      dispatch({ type:'BLOG_CREATE', blog: savedBlog })      
+      dispatch({ type:'BLOG_CREATE', blog: savedBlog })
       dispatch(userUpdate(savedBlog.user))
     } catch (exception) {
       console.log(exception)
@@ -58,7 +58,21 @@ export const blogLike = (blogToLike) => {
     try {
       const updatedBlog = await blogService.update({ ...blogToLike, likes: blogToLike.likes + 1 })
       dispatch({
-        type: 'BLOG_LIKE',
+        type: 'BLOG_UPDATE',
+        blog: updatedBlog
+      })
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+}
+
+export const blogAddComment = (blogToComment, comment) => {
+  return async (dispatch) => {
+    try {
+      const updatedBlog = await blogService.addComment(blogToComment.id, comment)
+      dispatch({
+        type: 'BLOG_UPDATE',
         blog: updatedBlog
       })
     } catch (exception) {
