@@ -17,18 +17,38 @@ class NewBlogForm extends React.Component {
       visible: false,
       title: '',
       author: '',
-      url: ''
+      url: '',
+      valid: {
+        title: true,
+        author: true,
+        url: true
+      }
     }
   }
 
-  handleChange = (event) => {
+  validateInputs = () => {
+    const valid = {
+      title: this.state.title.length > 0,
+      author: this.state.author.length > 0,
+      url: this.state.url.length > 0
+    }
+
+    this.setState({
+      valid
+    })
+
+    return valid.title && valid.author && valid.url
+  }
+
+  handleChange =  (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault()
+    if (!await this.validateInputs()) return
 
     const newBlog = {
       title: this.state.title,
@@ -37,7 +57,8 @@ class NewBlogForm extends React.Component {
     }
 
     this.setState({
-      title: '', author: '', url: ''
+      title: '', author: '', url: '',
+      valid: { title: true, author: true, url: true }
     })
 
     this.props.blogCreate(newBlog)
@@ -60,6 +81,7 @@ class NewBlogForm extends React.Component {
               value={this.state.title}
               onChange={this.handleChange}
             />
+            <label>{this.state.valid.title ? '' : 'required'}</label>
           </div>
           <div>
             author
@@ -69,6 +91,7 @@ class NewBlogForm extends React.Component {
               value={this.state.author}
               onChange={this.handleChange}
             />
+            <label>{this.state.valid.author ? '' : 'required'}</label>
           </div>
           <div>
             url
@@ -78,6 +101,7 @@ class NewBlogForm extends React.Component {
               value={this.state.url}
               onChange={this.handleChange}
             />
+            <label>{this.state.valid.url ? '' : 'required'}</label>
           </div>
           <button type="submit">lisää</button>
         </form>

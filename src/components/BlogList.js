@@ -1,19 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import Blog from './Blog'
-
-const BlogList = ({ blogs, user }) => (
+const BlogList = ({ blogs }) => (
 
   <div>
     <h1>Blogs</h1>
-    {blogs.map(blog =>
-      <Blog
-        key={blog.id}
-        blog={blog}
-        user={user}
-      />
-    )}
+    <table>
+      <tbody>
+        {blogs.map(blog =>
+
+          <tr key={blog.id}>
+            <td>
+              <Link to={`blogs/${blog.id}`} > {blog.title} </Link>
+            </td>
+          </tr>
+
+        )}
+      </tbody>
+    </table>
   </div>
 )
 
@@ -26,8 +31,7 @@ const mapStateToProps = (state) => {
     })
 
   return {
-    blogs: sortedBlogs,
-    user: state.loggedIn
+    blogs: sortedBlogs
   }
 }
 

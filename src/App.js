@@ -15,7 +15,7 @@ import LoginForm from './components/LoginForm'
 import UserList from './components/UserList'
 import User from './components/User'
 import BlogList from './components/BlogList'
-import Blog from './components/Blog'
+import BlogContainer from './components/BlogContainer'
 import NewBlogForm from './components/NewBlogForm'
 import Notification from './components/Notification'
 import LogOutButton from './components/LogOutButton'
@@ -73,7 +73,7 @@ class App extends React.Component {
                 <User userId={match.params.id} />}
               />
               <Route exact path="/blogs/:id" render={({ match }) =>
-                <Blog blogId={match.params.id} />}
+                <BlogContainer blogId={match.params.id} />}
               />
             </div>
 
