@@ -1,6 +1,8 @@
 import blogService from '../services/blogs'
 import { userUpdate } from './userReducer'
 
+console.log('before blogReducer')
+
 const blogReducer = (state = [], action) => {
   switch (action.type) {
   case 'BLOG_CREATE':

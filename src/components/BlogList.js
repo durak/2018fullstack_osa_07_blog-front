@@ -2,25 +2,27 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-const BlogList = ({ blogs }) => (
+const BlogList = ({ blogs }) => {
+  console.log('blogs in bloglist', blogs)
+  return (
+    <div>
+      <h1>Blogs</h1>
+      <table>
+        <tbody>
+          {blogs.map(blog =>
 
-  <div>
-    <h1>Blogs</h1>
-    <table>
-      <tbody>
-        {blogs.map(blog =>
+            <tr key={blog.id}>
+              <td>
+                <Link to={`blogs/${blog.id}`} > {blog.title} </Link>
+              </td>
+            </tr>
 
-          <tr key={blog.id}>
-            <td>
-              <Link to={`blogs/${blog.id}`} > {blog.title} </Link>
-            </td>
-          </tr>
-
-        )}
-      </tbody>
-    </table>
-  </div>
-)
+          )}
+        </tbody>
+      </table>
+    </div>
+  )
+}
 
 
 const mapStateToProps = (state) => {

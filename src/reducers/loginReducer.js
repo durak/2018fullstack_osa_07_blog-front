@@ -2,6 +2,7 @@ import loginService from '../services/login'
 import blogService from '../services/blogs'
 import { notify } from './notificationReducer'
 
+console.log('initial localstorage login')
 const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
 const initialState = loggedUserJSON ? JSON.parse(loggedUserJSON) : null
 

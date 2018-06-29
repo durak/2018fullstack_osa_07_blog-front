@@ -4,7 +4,8 @@ import { Link, Redirect } from 'react-router-dom'
 
 const User = (props) => {
   const user = props.users.find((u) => u.id === props.userId)
-
+  console.log('Users in User instance', props.users)
+  console.log('UserId in User instanse', props.userId)
   if (user === undefined) return <Redirect to="/" />
 
   return (

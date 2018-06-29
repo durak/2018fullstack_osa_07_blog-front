@@ -1,3 +1,5 @@
+console.log('before notificationReducer')
+
 const notificationReducer = (state = null, action) => {
 
   switch (action.type) {

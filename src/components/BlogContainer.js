@@ -18,6 +18,10 @@ const BlogContainer = ({
   notify
 }) => {
 
+  console.log('blogs in BlogContainer', blogs)
+  console.log('blogId in BlogContainer', blogId)
+  console.log('user in BlogContainer', user)
+
   const blog = blogs.find((b) => b.id === blogId)
 
   const handleDestroy = () => {

@@ -30,11 +30,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.blogsInit()
-    this.props.usersInit()
+/*     this.props.blogsInit()
+    this.props.usersInit() */
 
     if (this.props.user) {
       blogService.setToken(this.props.user.token)
+      this.props.blogsInit()
+      this.props.usersInit()
     }
 
     console.log('ComponentDidMount this.props.user', this.props.user)
@@ -43,6 +45,8 @@ class App extends React.Component {
   }
 
   render() {
+    console.log('APP render')
+    console.log('APP user prop', this.props.user)
 
     if (this.props.user === null) {
       return (

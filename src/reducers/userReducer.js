@@ -1,5 +1,7 @@
 import userService from '../services/users'
 
+console.log('before userReducer')
+
 const userReducer = (state = [], action) => {
   switch (action.type) {
   case 'USERS_INIT': {
