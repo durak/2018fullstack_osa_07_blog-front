@@ -3,8 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-import { blogCreate } from '../reducers/blogReducer'
-import { notify } from '../reducers/notificationReducer'
+import { blogCreate } from '../../reducers/blogReducer'
+import { notify } from '../../reducers/notificationReducer'
 
 class NewBlogForm extends React.Component {
   static propTypes = {

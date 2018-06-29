@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { blogLike, blogDestroy, blogAddComment } from '../reducers/blogReducer'
-import { notify } from '../reducers/notificationReducer'
+import { blogLike, blogDestroy, blogAddComment } from '../../reducers/blogReducer'
+import { notify } from '../../reducers/notificationReducer'
 
-import Blog from './Blog'
-import BlogComments from './BlogComments'
-import BlogCommentForm from './BlogCommentForm'
+import Blog from './blogContainer/Blog'
+import BlogComments from './blogContainer/BlogComments'
+import BlogCommentForm from './blogContainer/BlogCommentForm'
 
 const BlogContainer = ({
   user,
