@@ -1,4 +1,6 @@
 import React from 'react'
+import { List, Transition } from 'semantic-ui-react'
+
 
 const Blogcomments = ({ blog }) => {
   if (blog === undefined) return null
@@ -6,10 +8,11 @@ const Blogcomments = ({ blog }) => {
   return (
     <div className="comments">
       <h2>Comments</h2>
-      <ul>
+      <Transition.Group as={List} duration={200} divided size="small" verticalAlign="middle">
+      
         {blog.comments.map((comment) =>
-          <li key={comment._id}>{comment.comment}</li>)}
-      </ul>
+          <List.Item key={comment._id}>{comment.comment}</List.Item>)}
+      </Transition.Group>
     </div>
   )
 }

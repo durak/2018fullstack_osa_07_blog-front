@@ -1,9 +1,8 @@
 import React from 'react'
-import {
-  BrowserRouter as Router,
-  Route, Link
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+import { Container, Menu, Loader, Rating } from 'semantic-ui-react'
 
 import blogService from './services/blogs'
 
@@ -44,7 +43,7 @@ class App extends React.Component {
     console.log('ComponentDidMount LOADDIIIING', this.state.loading)
     if (this.props.user) {
       this.initUsersAndBlogs()
-/*       console.log('APP SETS TOKEN')
+      /*       console.log('APP SETS TOKEN')
       blogService.setToken(this.props.user.token)
       await this.props.blogsInit()
       await this.props.usersInit()
@@ -59,14 +58,14 @@ class App extends React.Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-/*     console.log('COMPONENTDIDUPDATE prevProps', prevProps)
+    /*     console.log('COMPONENTDIDUPDATE prevProps', prevProps)
     console.log('COMPONENTDIDUPDATE new props', this.props)
     console.log('COMPONENTDIDUPDATE prevState', prevState)
     console.log('COMPONENTDIDUPDATE new State', this.state) */
     if (prevProps !== this.props && this.props.user) {
       console.log('----PROPS DONT MATCH---')
       this.initUsersAndBlogs()
-/*       blogService.setToken(this.props.user.token)
+      /*       blogService.setToken(this.props.user.token)
       await this.props.blogsInit()
       await this.props.usersInit()
       await this.setState({ loading:false }) */
@@ -79,46 +78,65 @@ class App extends React.Component {
 
     if (this.props.user === null) {
       return (
-        <div>
+        <Container>
+          
           <Notification />
           <LoginForm />
-        </div>
+        </Container>
       )
     }
 
-    if (this.state.loading) return <em>Loading...</em>
+    if (this.state.loading) {
+      return (
+        <Container>
+          <Loader active size="massive" />
+        </Container>
+      )
+    }
 
     return (
-      <div>
-        <Notification  />
-        <Router>
-          <div>
+      <Container>
+        <div>
+          <Notification  />
+          <Router>
+            <div>
 
-            <div className="header">
-              <Link to="/">blogs</Link> &nbsp;
-              <Link to="/users">users</Link> &nbsp;
-              <p>{this.props.user.name} logged in</p>
-              <LogOutButton />
+              <div className="header">
+                <Menu inverted fixed>
+                  <Menu.Item link>
+                    <Link to="/">blogs</Link>
+                  </Menu.Item>
+                  <Menu.Item link>
+                    <Link to="/users">users</Link> &nbsp;
+                  </Menu.Item>
+                  <Menu.Item>
+                    <p>{this.props.user.name} logged in</p>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <LogOutButton />
+                  </Menu.Item>
+                </Menu>
+              </div>
+
+              <div className="beaf">
+                <Route exact path="/" render={() => <BlogList />} />
+                <Route exact path="/users" render={() => <UserList />} />
+                <Route exact path="/users/:id" render={({ match }) =>
+                  <User userId={match.params.id} />}
+                />
+                <Route exact path="/blogs/:id" render={({ match }) =>
+                  <BlogContainer blogId={match.params.id} />}
+                />
+              </div>
+
+              <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
+                <NewBlogForm togglable={this.newBlogForm} />
+              </Togglable>
+
             </div>
-
-            <div className="beaf">
-              <Route exact path="/" render={() => <BlogList />} />
-              <Route exact path="/users" render={() => <UserList />} />
-              <Route exact path="/users/:id" render={({ match }) =>
-                <User userId={match.params.id} />}
-              />
-              <Route exact path="/blogs/:id" render={({ match }) =>
-                <BlogContainer blogId={match.params.id} />}
-              />
-            </div>
-
-            <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
-              <NewBlogForm togglable={this.newBlogForm} />
-            </Togglable>
-
-          </div>
-        </Router>
-      </div>
+          </Router>
+        </div>
+      </Container>
     )
   }
 }

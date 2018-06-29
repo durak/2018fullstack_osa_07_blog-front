@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Table } from 'semantic-ui-react'
+
 
 const UserList = ({ users }) => {
   console.log('UserList', users)
@@ -8,22 +10,22 @@ const UserList = ({ users }) => {
   return(
     <div>
       <h1>Users</h1>
-      <table>
-        <tbody>
-          <tr>
-            <td />
-            <td>Blogs</td>
-          </tr>
+      <Table>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell />
+            <Table.Cell>Blogs</Table.Cell>
+          </Table.Row>
 
           {users.map(user =>
-            <tr key={user.id}>
-              <td><Link to={`users/${user.id}`}>{user.name}</Link></td>
-              <td>{user.blogs.length}</td>
-            </tr>
+            <Table.Row key={user.id}>
+              <Table.Cell><Link to={`users/${user.id}`}>{user.name}</Link></Table.Cell>
+              <Table.Cell>{user.blogs.length}</Table.Cell>
+            </Table.Row>
           )}
 
-        </tbody>
-      </table>
+        </Table.Body>
+      </Table>
     </div>
   )
 }

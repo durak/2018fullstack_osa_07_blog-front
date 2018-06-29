@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Form, Button } from 'semantic-ui-react'
 
 import { login } from '../../reducers/loginReducer'
 
@@ -34,28 +35,29 @@ class LoginForm extends React.Component {
     return (
       <div >
         <h2> Kirjaudu sisään </h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-          Käyttäjänimi
+        <Form onSubmit={this.handleSubmit}>
+
+          <Form.Field>
+            <label>Username</label>
             <input
               type="text"
               name="username"
               value={this.state.username}
               onChange={this.handleChange}
             />
-          </div>
+          </Form.Field>
 
-          <div>
-          Salasana
+          <Form.Field>
+            <label>Password</label>
             <input
               type="password"
               name="password"
               value={this.state.password}
               onChange={this.handleChange}
             />
-          </div>
-          <button>kirjaudu</button>
-        </form>
+          </Form.Field>
+          <Button type="submit">kirjaudu</Button>
+        </Form>
       </div >
     )
   }

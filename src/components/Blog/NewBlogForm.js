@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { Form, Button, Input } from 'semantic-ui-react'
 
 import { blogCreate } from '../../reducers/blogReducer'
 import { notify } from '../../reducers/notificationReducer'
@@ -85,41 +86,49 @@ class NewBlogForm extends React.Component {
 
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            title
-            <input
+
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Group widths="equal">
+          <Form.Field>
+            <label>title</label>
+            <Form.Input
+              fluid
               type="text"
               name="title"
               value={this.state.title}
               onChange={this.handleChange}
+              error={!this.state.valid.title}
             />
-            <label>{this.state.valid.title ? '' : 'required'}</label>
-          </div>
-          <div>
-            author
-            <input
+          </Form.Field>
+
+          <Form.Field>
+            <label>author</label>
+            <Form.Input
+              fluid
               type="text"
               name="author"
               value={this.state.author}
               onChange={this.handleChange}
+              error={!this.state.valid.author}
             />
-            <label>{this.state.valid.author ? '' : 'required'}</label>
-          </div>
-          <div>
-            url
-            <input
+          </Form.Field>
+
+          <Form.Field>
+            <label>url</label>
+            <Form.Input
+              fluid
               type="text"
               name="url"
               value={this.state.url}
               onChange={this.handleChange}
+              error={!this.state.valid.url}
             />
-            <label>{this.state.valid.url ? '' : 'required'}</label>
-          </div>
-          <button type="submit">lisää</button>
-        </form>
-      </div>
+          </Form.Field>
+
+          <Button type="submit">submit</Button>
+        </Form.Group>
+      </Form>
+
     )
   }
 }

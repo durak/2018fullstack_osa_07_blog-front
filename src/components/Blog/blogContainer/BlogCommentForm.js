@@ -1,4 +1,5 @@
 import React from 'react'
+import { Form, Button, Input } from 'semantic-ui-react'
 
 const BlogCommentForm = ({ handleComment }) => {
 
@@ -8,10 +9,11 @@ const BlogCommentForm = ({ handleComment }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
     const comment = event.target.comment.value
 
     if (!valid(comment)) {
-      event.target.valid.value = 'required'
+      event.target.valid.value = 'required field'
       return
     }
 
@@ -20,15 +22,19 @@ const BlogCommentForm = ({ handleComment }) => {
     handleComment(comment)
   }
 
+
   return (
     <div>
-      <form onSubmit={handleSubmit} >
-        <div>
-          <input type="text" name="comment" />
-          <output name="valid"></output>
-        </div>
-        <button type="submit">add comment</button>
-      </form>
+      <Form onSubmit={handleSubmit} >
+        <Form.Field inline>
+          <Input name="comment" />
+          <label>
+            <output name="valid" type="text"></output>
+          </label>
+        </Form.Field>
+
+        <Button type="submit">add comment</Button>
+      </Form>
     </div>
   )
 }
