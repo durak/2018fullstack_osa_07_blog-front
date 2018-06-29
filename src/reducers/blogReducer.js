@@ -11,12 +11,10 @@ const blogReducer = (state = [], action) => {
     return state.filter(b => b.id !== action.id)
   case 'BLOG_UPDATE':
     return state.map(b => b.id !== action.blog.id ? b : action.blog)
-  case 'TOGGLE_FULLVIEW':{
-    console.log('toggle')
-    return state.map(b => b.id !== action.blog.id ? b : { ...action.blog, fullView: !action.blog.fullView })
-  }
   case 'BLOGS_INIT':
     return action.blogs
+  case 'BLOGS_CLEAR_ALL':
+    return []
 
   default:
     return state
@@ -94,10 +92,9 @@ export const blogsInit = () => {
   }
 }
 
-export const blogToggleVisibility = (blog) => {
-  return {
-    type: 'TOGGLE_FULLVIEW',
-    blog
+export const blogsClearAll = () => {
+  return async (dispatch) => {
+    dispatch({ type: 'BLOGS_CLEAR_ALL' })
   }
 }
 

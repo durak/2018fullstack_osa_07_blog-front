@@ -1,6 +1,8 @@
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 import { notify } from './notificationReducer'
+import { blogsClearAll } from './blogReducer'
+import { usersClearAll } from './userReducer'
 
 console.log('initial localstorage login')
 const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
@@ -30,7 +32,7 @@ export const login = (username, password) => {
       })
 
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
-      blogService.setToken(user.token)
+      //blogService.setToken(user.token)
 
       dispatch({
         type: 'LOGIN',
@@ -46,13 +48,15 @@ export const login = (username, password) => {
 }
 
 export const logout = (user) => {
-  return (dispatch) => {    
+  return (dispatch) => {
     window.localStorage.removeItem('loggedBlogAppUser')
     dispatch({
       type: 'LOGOUT'
     })
     blogService.setToken(null)
     dispatch(notify(`user ${user.name} logged out`, 'message'))
+    dispatch(blogsClearAll())
+    dispatch(usersClearAll())
   }
 }
 

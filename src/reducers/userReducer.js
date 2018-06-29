@@ -12,6 +12,9 @@ const userReducer = (state = [], action) => {
     console.log('userReducer state before update is', state)
     return state.map((u) => u.id !== action.updatedUser.id ? u : action.updatedUser)
   }
+  case 'USERS_CLEAR_ALL':
+    return []
+
   default:
     return state
   }
@@ -41,6 +44,12 @@ export const userUpdate = (user) => {
     } catch (exception) {
       console.log(exception)
     }
+  }
+}
+
+export const usersClearAll = () => {
+  return async (dispatch) => {
+    dispatch({ type:'USERS_CLEAR_ALL' })
   }
 }
 

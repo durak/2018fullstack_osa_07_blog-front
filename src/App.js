@@ -26,22 +26,51 @@ class App extends React.Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      loading: true
+    }
     this.newBlogForm = React.createRef()
   }
 
-  componentDidMount() {
-/*     this.props.blogsInit()
-    this.props.usersInit() */
+  async initUsersAndBlogs() {
+    blogService.setToken(this.props.user.token)
+    await this.props.blogsInit()
+    await this.props.usersInit()
+    await this.setState({ loading:false })
+  }
 
+  async componentDidMount() {
+
+    console.log('ComponentDidMount LOADDIIIING', this.state.loading)
     if (this.props.user) {
+      this.initUsersAndBlogs()
+/*       console.log('APP SETS TOKEN')
       blogService.setToken(this.props.user.token)
-      this.props.blogsInit()
-      this.props.usersInit()
+      await this.props.blogsInit()
+      await this.props.usersInit()
+      await this.setState({ loading:false }) */
+    } else {
+      console.log('APP DOES NOT SET TOKEN')
     }
 
-    console.log('ComponentDidMount this.props.user', this.props.user)
-    console.log('ComponentDidMount blogService.token', blogService.token)
-    console.log('ComponentDidMount localstorage', JSON.parse(window.localStorage.getItem('loggedBlogAppUser')))
+
+
+    console.log('ComponentDidMount LOADDIIIING AFFTERR', this.state.loading)
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
+/*     console.log('COMPONENTDIDUPDATE prevProps', prevProps)
+    console.log('COMPONENTDIDUPDATE new props', this.props)
+    console.log('COMPONENTDIDUPDATE prevState', prevState)
+    console.log('COMPONENTDIDUPDATE new State', this.state) */
+    if (prevProps !== this.props && this.props.user) {
+      console.log('----PROPS DONT MATCH---')
+      this.initUsersAndBlogs()
+/*       blogService.setToken(this.props.user.token)
+      await this.props.blogsInit()
+      await this.props.usersInit()
+      await this.setState({ loading:false }) */
+    }
   }
 
   render() {
@@ -56,6 +85,8 @@ class App extends React.Component {
         </div>
       )
     }
+
+    if (this.state.loading) return <em>Loading...</em>
 
     return (
       <div>
