@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import { blogCreate } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
@@ -22,7 +23,14 @@ class NewBlogForm extends React.Component {
         title: true,
         author: true,
         url: true
-      }
+      },
+      redirectAfterSubmit: null
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.redirectAfterSubmit !== this.state.redirectAfterSubmit) {
+      this.setState({ redirectAfterSubmit: null })
     }
   }
 
@@ -56,18 +64,24 @@ class NewBlogForm extends React.Component {
       url: this.state.url
     }
 
-    this.setState({
-      title: '', author: '', url: '',
-      valid: { title: true, author: true, url: true }
-    })
-
-    this.props.blogCreate(newBlog)
+    const response = await this.props.blogCreate(newBlog)
     this.props.notify(`a new blog ${newBlog.title} by ${newBlog.author} added`, 'message')
     this.props.togglable.current.toggleVisibility()
+    console.log('RESPOEEEEENNENSNSNNENE', response)
+
+    this.setState({
+      title: '', author: '', url: '',
+      valid: { title: true, author: true, url: true },
+      redirectAfterSubmit: response.id
+    })
   }
 
 
   render() {
+
+    if (this.state.redirectAfterSubmit) {
+      return(<Redirect push to={`/blogs/${this.state.redirectAfterSubmit}`} />)
+    }
 
 
     return (

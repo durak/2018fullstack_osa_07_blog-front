@@ -34,6 +34,8 @@ export const blogCreate = (newBlog) => {
 
       dispatch({ type:'BLOG_CREATE', blog: savedBlog })
       dispatch(userUpdate(savedBlog.user))
+
+      return savedBlog
     } catch (exception) {
       console.log(exception)
     }
