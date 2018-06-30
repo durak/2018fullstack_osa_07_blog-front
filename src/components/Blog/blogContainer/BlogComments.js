@@ -12,7 +12,7 @@ const Blogcomments = ({ blog }) => {
       </Header>
       {blog.comments.map((comment) =>
         <Comment key={comment._id}>
-          <Comment.Avatar as={Icon} name="comment outline"></Comment.Avatar>
+          <Comment.Avatar as={Icon} name="caret right"></Comment.Avatar>
           <Comment.Content>
             <Comment.Text>
               {comment.comment}

@@ -2,12 +2,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { Form, Button, Input } from 'semantic-ui-react'
+import { Form, Button, Input, Sidebar, Segment } from 'semantic-ui-react'
 
+import NewBlogForm from './newBlogFormContainer/NewBlogForm'
 import { blogCreate } from '../../reducers/blogReducer'
 import { notify } from '../../reducers/notificationReducer'
+import { toggleSidebar } from '../../reducers/sidebarReducer'
 
-class NewBlogForm extends React.Component {
+class NewBlogFormContainer extends React.Component {
   static propTypes = {
     blogCreate: PropTypes.func.isRequired,
     notify: PropTypes.func.isRequired
@@ -16,7 +18,6 @@ class NewBlogForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      visible: false,
       title: '',
       author: '',
       url: '',
@@ -67,16 +68,16 @@ class NewBlogForm extends React.Component {
 
     const response = await this.props.blogCreate(newBlog)
     this.props.notify(`a new blog ${newBlog.title} by ${newBlog.author} added`, 'message')
-    //this.props.togglable.current.toggleVisibility()
-    console.log('RESPOEEEEENNENSNSNNENE', response)
+
 
     this.setState({
       title: '', author: '', url: '',
       valid: { title: true, author: true, url: true },
       redirectAfterSubmit: response.id
     })
-  }
 
+    this.props.toggleSidebar()
+  }
 
   render() {
 
@@ -86,61 +87,23 @@ class NewBlogForm extends React.Component {
 
 
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <h1>Add new blog</h1>
-          <Form.Group widths="equal">
-            <Form.Field>
-              <label>title</label>
-              <Form.Input
-                fluid
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.handleChange}
-                error={!this.state.valid.title}
-              />
-            </Form.Field>
-
-            <Form.Field>
-              <label>author</label>
-              <Form.Input
-                fluid
-                type="text"
-                name="author"
-                value={this.state.author}
-                onChange={this.handleChange}
-                error={!this.state.valid.author}
-              />
-            </Form.Field>
-
-            <Form.Field>
-              <label>url</label>
-              <Form.Input
-                fluid
-                type="text"
-                name="url"
-                value={this.state.url}
-                onChange={this.handleChange}
-                error={!this.state.valid.url}
-              />
-            </Form.Field>
-
-
-          </Form.Group>
-          <Button type="submit">submit</Button>
-          <Button type="reset" onClick={() => console.log('asd')}>cancel</Button>
-
-        </Form>
-
-      </div>
-
-
+      <Sidebar as={Segment} animation="overlay" direction="bottom" visible={this.props.sidebar.visible}>
+        <NewBlogForm
+          handleSubmit={this.handleSubmit} handleChange={this.handleChange} handleCancel={this.props.toggleSidebar}
+          title={this.state.title} author={this.state.author} url={this.state.url} valid={this.state.valid}
+        />
+      </Sidebar>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    sidebar: state.sidebar
+  }
+}
+
 export default connect(
-  null,
-  { blogCreate, notify }
-)(NewBlogForm)
+  mapStateToProps,
+  { blogCreate, notify, toggleSidebar }
+)(NewBlogFormContainer)

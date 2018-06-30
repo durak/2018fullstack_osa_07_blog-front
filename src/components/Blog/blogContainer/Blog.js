@@ -40,7 +40,7 @@ const Blog = ({ blog, user, handleLike, handleDestroy }) => {
           </span>
           {blog.likes} votes
 
-          <span className="right floated"><Icon name="comment" />{blog.comments.length} comments</span>
+          <span className="right floated"><Icon name="comments" />{blog.comments.length} comments</span>
 
         </Card.Content>
       </Card>

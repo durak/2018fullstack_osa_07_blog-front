@@ -1,14 +1,15 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-
-import { Container, Menu, Loader, Segment } from 'semantic-ui-react'
+import { Container, Menu, Loader, Segment, Button, Icon, Image } from 'semantic-ui-react'
+import logo from './marx.jpg'
 
 import blogService from './services/blogs'
 
 import { notify } from './reducers/notificationReducer'
 import { blogsInit } from './reducers/blogReducer'
 import { usersInit } from './reducers/userReducer'
+import { toggleSidebar } from './reducers/sidebarReducer'
 
 import LoginForm from './components/Login/LoginForm'
 import UserList from './components/User/UserList'
@@ -16,6 +17,7 @@ import User from './components/User/User'
 import BlogList from './components/Blog/BlogList'
 import BlogContainer from './components/Blog/BlogContainer'
 import NewBlogForm from './components/Blog/NewBlogForm'
+import NewBlogFormContainer from './components/Blog/NewBlogFormContainer'
 import Notification from './components/App/Notification'
 import LogOutButton from './components/Login/LogOutButton'
 import Togglable from './components/App/Togglable'
@@ -26,7 +28,8 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true
+      loading: true,
+      sideBar: false
     }
     this.newBlogForm = React.createRef()
   }
@@ -95,12 +98,24 @@ class App extends React.Component {
     }
 
 
+
+
     return (
       <div >
         <Router>
           <Container>
-            <Menu inverted fixed="top">
+
+            <Menu inverted fixed="top" fitted="vertical">
               <Container>
+                <Menu.Item header>
+                  <span>
+                    <Image size="mini" src={logo} style={{ marginRight: '1.5em' }} />
+                  BlogMarx
+                  </span>
+                </Menu.Item>
+                <Menu.Item>
+                  <p>{this.props.user.name} logged in</p>
+                </Menu.Item>
                 <Menu.Item link>
                   <Link to="/">blogs</Link>
                 </Menu.Item>
@@ -108,22 +123,17 @@ class App extends React.Component {
                   <Link to="/users">users</Link> &nbsp;
                 </Menu.Item>
                 <Menu.Item>
-                  <p>{this.props.user.name} logged in</p>
+                  <Button primary onClick={this.props.toggleSidebar}>add blog</Button>
                 </Menu.Item>
                 <Menu.Item>
                   <LogOutButton />
                 </Menu.Item>
-                <Menu.Item>
-                  <span>add blog</span>
-                  </Menu.Item>
               </Container>
             </Menu>
-            
-            
-             
-      
+
             <Container  fluid  style={{ marginTop: '7em' }}>
-            <Notification  />
+
+              <Notification  />
               <Route exact path="/" render={() => <BlogList />} />
               <Route exact path="/users" render={() => <UserList />} />
               <Route exact path="/users/:id" render={({ match }) =>
@@ -134,15 +144,10 @@ class App extends React.Component {
               />
 
             </Container>
-            <Segment vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
-              <Container >
-                <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
-                  <NewBlogForm togglable={this.newBlogForm} />
-                </Togglable>
-              </Container>
-            </Segment>
 
+            <NewBlogFormContainer />
           </Container>
+
         </Router>
       </div>
 
@@ -150,6 +155,7 @@ class App extends React.Component {
     )
   }
 }
+
 
 const mapStateToProps = (state) => {
   return {
@@ -159,5 +165,15 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { notify, blogsInit, usersInit }
+  { notify, blogsInit, usersInit, toggleSidebar }
 )(App)
+
+
+
+{/* <Segment vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
+<Container >
+  <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
+    <NewBlogForm togglable={this.newBlogForm} />
+  </Togglable>
+</Container>
+</Segment> */}
