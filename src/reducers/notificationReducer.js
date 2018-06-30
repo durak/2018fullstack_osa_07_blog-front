@@ -1,4 +1,3 @@
-console.log('before notificationReducer')
 
 const notificationReducer = (state = null, action) => {
 

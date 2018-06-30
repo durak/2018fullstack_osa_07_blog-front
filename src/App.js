@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Container, Menu, Loader, Segment, Button, Icon, Image } from 'semantic-ui-react'
+import { Container, Menu, Loader, Button, Image } from 'semantic-ui-react'
 import logo from './marx.jpg'
 
 import blogService from './services/blogs'
@@ -16,11 +16,9 @@ import UserList from './components/User/UserList'
 import User from './components/User/User'
 import BlogList from './components/Blog/BlogList'
 import BlogContainer from './components/Blog/BlogContainer'
-import NewBlogForm from './components/Blog/NewBlogForm'
 import NewBlogFormContainer from './components/Blog/NewBlogFormContainer'
 import Notification from './components/App/Notification'
 import LogOutButton from './components/Login/LogOutButton'
-import Togglable from './components/App/Togglable'
 
 
 class App extends React.Component {
@@ -42,47 +40,25 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-
-    console.log('ComponentDidMount LOADDIIIING', this.state.loading)
+    // User was found in localStorage
     if (this.props.user) {
       this.initUsersAndBlogs()
-      /*       console.log('APP SETS TOKEN')
-      blogService.setToken(this.props.user.token)
-      await this.props.blogsInit()
-      await this.props.usersInit()
-      await this.setState({ loading:false }) */
-    } else {
-      console.log('APP DOES NOT SET TOKEN')
     }
-
-
-
-    console.log('ComponentDidMount LOADDIIIING AFFTERR', this.state.loading)
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    /*     console.log('COMPONENTDIDUPDATE prevProps', prevProps)
-    console.log('COMPONENTDIDUPDATE new props', this.props)
-    console.log('COMPONENTDIDUPDATE prevState', prevState)
-    console.log('COMPONENTDIDUPDATE new State', this.state) */
+    // User was not in localStorage and logged in
     if (prevProps !== this.props && this.props.user) {
       console.log('----PROPS DONT MATCH---')
       this.initUsersAndBlogs()
-      /*       blogService.setToken(this.props.user.token)
-      await this.props.blogsInit()
-      await this.props.usersInit()
-      await this.setState({ loading:false }) */
     }
   }
 
   render() {
-    console.log('APP render')
-    console.log('APP user prop', this.props.user)
 
     if (this.props.user === null) {
       return (
         <Container>
-
           <Notification />
           <LoginForm />
         </Container>
@@ -97,9 +73,6 @@ class App extends React.Component {
       )
     }
 
-
-
-
     return (
       <div >
         <Router>
@@ -110,7 +83,7 @@ class App extends React.Component {
                 <Menu.Item header>
                   <span>
                     <Image size="mini" src={logo} style={{ marginRight: '1.5em' }} />
-                  BlogMarx
+                    BlogMarx
                   </span>
                 </Menu.Item>
                 <Menu.Item>
@@ -132,7 +105,6 @@ class App extends React.Component {
             </Menu>
 
             <Container  fluid  style={{ marginTop: '7em' }}>
-
               <Notification  />
               <Route exact path="/" render={() => <BlogList />} />
               <Route exact path="/users" render={() => <UserList />} />
@@ -142,12 +114,11 @@ class App extends React.Component {
               <Route exact path="/blogs/:id" render={({ match }) =>
                 <BlogContainer blogId={match.params.id} />}
               />
-
             </Container>
 
             <NewBlogFormContainer />
-          </Container>
 
+          </Container>
         </Router>
       </div>
 
@@ -167,13 +138,3 @@ export default connect(
   mapStateToProps,
   { notify, blogsInit, usersInit, toggleSidebar }
 )(App)
-
-
-
-{/* <Segment vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
-<Container >
-  <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
-    <NewBlogForm togglable={this.newBlogForm} />
-  </Togglable>
-</Container>
-</Segment> */}

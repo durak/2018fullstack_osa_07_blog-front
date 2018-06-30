@@ -1,10 +1,10 @@
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+
 import { notify } from './notificationReducer'
 import { blogsClearAll } from './blogReducer'
 import { usersClearAll } from './userReducer'
 
-console.log('initial localstorage login')
 const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
 const initialState = loggedUserJSON ? JSON.parse(loggedUserJSON) : null
 
@@ -40,7 +40,6 @@ export const login = (username, password) => {
       })
 
     } catch (exception) {
-
       console.log(exception)
       dispatch(notify('wrong username or password', 'error'))
     }

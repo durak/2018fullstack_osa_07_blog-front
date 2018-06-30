@@ -5,7 +5,6 @@ import { Table } from 'semantic-ui-react'
 
 
 const UserList = ({ users }) => {
-  console.log('UserList', users)
 
   return(
     <div>

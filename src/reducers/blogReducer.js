@@ -1,8 +1,6 @@
 import blogService from '../services/blogs'
 import { userUpdate } from './userReducer'
 
-console.log('before blogReducer')
-
 const blogReducer = (state = [], action) => {
   switch (action.type) {
   case 'BLOG_CREATE':
@@ -24,13 +22,9 @@ const blogReducer = (state = [], action) => {
 //------------ACTION CREATORS------------
 
 export const blogCreate = (newBlog) => {
-  console.log('blogReducer input newBlog', newBlog)
   return async (dispatch) => {
     try {
       const savedBlog = await blogService.create(newBlog)
-
-      console.log('blogReducer output savedblog', savedBlog)
-      console.log('blogreducer calls userReducer with user', savedBlog.user)
 
       dispatch({ type:'BLOG_CREATE', blog: savedBlog })
       dispatch(userUpdate(savedBlog.user))
@@ -45,8 +39,8 @@ export const blogCreate = (newBlog) => {
 export const blogDestroy = (blogToDestroy) => {
   return async (dispatch) => {
     try {
-      const response = await blogService.destroy(blogToDestroy)
-      console.log('delete response:', response)
+      await blogService.destroy(blogToDestroy)
+
       dispatch({ type: 'BLOG_DESTROY', id: blogToDestroy.id })
       dispatch(userUpdate(blogToDestroy.user))
     } catch (exception) {

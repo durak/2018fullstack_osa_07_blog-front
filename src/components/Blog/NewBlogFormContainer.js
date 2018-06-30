@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { Form, Button, Input, Sidebar, Segment } from 'semantic-ui-react'
+import { Sidebar, Segment } from 'semantic-ui-react'
 
 import NewBlogForm from './newBlogFormContainer/NewBlogForm'
 import { blogCreate } from '../../reducers/blogReducer'
@@ -12,7 +12,8 @@ import { toggleSidebar } from '../../reducers/sidebarReducer'
 class NewBlogFormContainer extends React.Component {
   static propTypes = {
     blogCreate: PropTypes.func.isRequired,
-    notify: PropTypes.func.isRequired
+    notify: PropTypes.func.isRequired,
+    sidebar: PropTypes.object.isRequired
   }
 
   constructor(props) {
