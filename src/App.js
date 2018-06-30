@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { Container, Menu, Loader, Rating } from 'semantic-ui-react'
+import { Container, Menu, Loader, Segment } from 'semantic-ui-react'
 
 import blogService from './services/blogs'
 
@@ -79,7 +79,7 @@ class App extends React.Component {
     if (this.props.user === null) {
       return (
         <Container>
-          
+
           <Notification />
           <LoginForm />
         </Container>
@@ -94,49 +94,59 @@ class App extends React.Component {
       )
     }
 
+
     return (
-      <Container>
-        <div>
-          <Notification  />
-          <Router>
-            <div>
-
-              <div className="header">
-                <Menu inverted fixed>
-                  <Menu.Item link>
-                    <Link to="/">blogs</Link>
+      <div >
+        <Router>
+          <Container>
+            <Menu inverted fixed="top">
+              <Container>
+                <Menu.Item link>
+                  <Link to="/">blogs</Link>
+                </Menu.Item>
+                <Menu.Item link>
+                  <Link to="/users">users</Link> &nbsp;
+                </Menu.Item>
+                <Menu.Item>
+                  <p>{this.props.user.name} logged in</p>
+                </Menu.Item>
+                <Menu.Item>
+                  <LogOutButton />
+                </Menu.Item>
+                <Menu.Item>
+                  <span>add blog</span>
                   </Menu.Item>
-                  <Menu.Item link>
-                    <Link to="/users">users</Link> &nbsp;
-                  </Menu.Item>
-                  <Menu.Item>
-                    <p>{this.props.user.name} logged in</p>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <LogOutButton />
-                  </Menu.Item>
-                </Menu>
-              </div>
+              </Container>
+            </Menu>
+            
+            
+             
+      
+            <Container  fluid  style={{ marginTop: '7em' }}>
+            <Notification  />
+              <Route exact path="/" render={() => <BlogList />} />
+              <Route exact path="/users" render={() => <UserList />} />
+              <Route exact path="/users/:id" render={({ match }) =>
+                <User userId={match.params.id} />}
+              />
+              <Route exact path="/blogs/:id" render={({ match }) =>
+                <BlogContainer blogId={match.params.id} />}
+              />
 
-              <div className="beaf">
-                <Route exact path="/" render={() => <BlogList />} />
-                <Route exact path="/users" render={() => <UserList />} />
-                <Route exact path="/users/:id" render={({ match }) =>
-                  <User userId={match.params.id} />}
-                />
-                <Route exact path="/blogs/:id" render={({ match }) =>
-                  <BlogContainer blogId={match.params.id} />}
-                />
-              </div>
+            </Container>
+            <Segment vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
+              <Container >
+                <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
+                  <NewBlogForm togglable={this.newBlogForm} />
+                </Togglable>
+              </Container>
+            </Segment>
 
-              <Togglable buttonLabel="Add new blog" ref={this.newBlogForm}>
-                <NewBlogForm togglable={this.newBlogForm} />
-              </Togglable>
+          </Container>
+        </Router>
+      </div>
 
-            </div>
-          </Router>
-        </div>
-      </Container>
+
     )
   }
 }

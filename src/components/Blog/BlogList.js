@@ -1,28 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Table } from 'semantic-ui-react'
+import { Table, Card, Icon } from 'semantic-ui-react'
 
-const BlogList = ({ blogs }) => {
+import BlogListItem from './blogList/BlogListItem'
+
+const BlogList= ({ blogs }) => {
   console.log('blogs in bloglist', blogs)
+
   return (
-    <div>
-      <h1>Blogs</h1>
-      <Table striped celled>
-        <Table.Body>
-          {blogs.map(blog =>
+    <Card.Group centered>
 
-            <Table.Row key={blog.id}>
-              <Table.Cell>
-                <Link to={`blogs/${blog.id}`} > {blog.title} </Link>
-              </Table.Cell>
-            </Table.Row>
-
-          )}
-        </Table.Body>
-      </Table>
-    </div>
+      {blogs.map(blog =>
+        <BlogListItem key={blog.id} blog={blog} />
+      )}
+    </Card.Group>
   )
+
 }
 
 
