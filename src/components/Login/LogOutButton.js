@@ -8,9 +8,7 @@ const LogOutButton = (props) => {
 
   if (props.user) {
     return (
-      <div>
-        <Button onClick={() => props.logout(props.user)}> logout </Button>
-      </div>
+      <Button negative onClick={() => props.logout(props.user)}> logout </Button>
     )
   }
 

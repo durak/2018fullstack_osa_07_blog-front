@@ -2,10 +2,10 @@ import userService from '../services/users'
 
 const userReducer = (state = [], action) => {
   switch (action.type) {
-  case 'USERS_INIT': {    
+  case 'USERS_INIT': {
     return action.users
   }
-  case 'USERS_SINGLE_UPDATE': {    
+  case 'USERS_SINGLE_UPDATE': {
     return state.map((u) => u.id !== action.updatedUser.id ? u : action.updatedUser)
   }
   case 'USERS_CLEAR_ALL':

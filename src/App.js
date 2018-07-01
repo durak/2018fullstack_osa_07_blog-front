@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Container, Menu, Loader, Button, Image } from 'semantic-ui-react'
+import { Container, Menu, Loader, Image, Dropdown } from 'semantic-ui-react'
 import logo from './marx.jpg'
 
 import blogService from './services/blogs'
@@ -19,6 +19,7 @@ import BlogContainer from './components/Blog/BlogContainer'
 import NewBlogFormContainer from './components/Blog/NewBlogFormContainer'
 import Notification from './components/App/Notification'
 import LogOutButton from './components/Login/LogOutButton'
+import ScrollToTop from './components/App/ScrollToTop'
 
 
 class App extends React.Component {
@@ -46,15 +47,16 @@ class App extends React.Component {
     }
   }
 
-  async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps) {
     // User was not in localStorage and logged in
-    if (prevProps !== this.props && this.props.user) {
+    if (prevProps.user !== this.props.user && this.props.user) {
       console.log('----PROPS DONT MATCH---')
       this.initUsersAndBlogs()
     }
   }
 
   render() {
+
 
     if (this.props.user === null) {
       return (
@@ -74,51 +76,53 @@ class App extends React.Component {
     }
 
     return (
-      <div >
+      <div>
+
         <Router>
-          <Container>
+          <ScrollToTop>
+            <Container>
 
-            <Menu inverted fixed="top" fitted="vertical">
-              <Container>
-                <Menu.Item header>
-                  <span>
-                    <Image size="mini" src={logo} style={{ marginRight: '1.5em' }} />
+              <Menu inverted fixed="top" fitted="vertical">
+                <Container fluid>
+                  <Menu.Item header>
+                    <span>
+                      <Image size="mini" src={logo} style={{ marginRight: '1.5em' }} />
                     BlogMarx
-                  </span>
-                </Menu.Item>
-                <Menu.Item>
-                  <p>{this.props.user.name} logged in</p>
-                </Menu.Item>
-                <Menu.Item link>
-                  <Link to="/">blogs</Link>
-                </Menu.Item>
-                <Menu.Item link>
-                  <Link to="/users">users</Link> &nbsp;
-                </Menu.Item>
-                <Menu.Item>
-                  <Button primary onClick={this.props.toggleSidebar}>add blog</Button>
-                </Menu.Item>
-                <Menu.Item>
-                  <LogOutButton />
-                </Menu.Item>
+                    </span>
+                  </Menu.Item>
+
+                  <Dropdown item   text={this.props.user.name}>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={this.props.toggleSidebar}>Add blog</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item><LogOutButton /></Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+
+                  <Menu.Item link as={Link} to="/">Blogs</Menu.Item>
+                  <Menu.Item link as={Link} to="/users">Users</Menu.Item>
+
+                </Container>
+              </Menu>
+
+
+              <Container  fluid style={{ marginTop: '7em' }}>
+                <Notification  />
+
+                <Route exact path="/" render={() => <BlogList />} />
+                <Route exact path="/users" render={() => <UserList />} />
+                <Route exact path="/users/:id" render={({ match }) =>
+                  <User userId={match.params.id} />}
+                />
+                <Route exact path="/blogs/:id" render={({ match }) =>
+                  <BlogContainer blogId={match.params.id} />}
+                />
               </Container>
-            </Menu>
 
-            <Container  fluid  style={{ marginTop: '7em' }}>
-              <Notification  />
-              <Route exact path="/" render={() => <BlogList />} />
-              <Route exact path="/users" render={() => <UserList />} />
-              <Route exact path="/users/:id" render={({ match }) =>
-                <User userId={match.params.id} />}
-              />
-              <Route exact path="/blogs/:id" render={({ match }) =>
-                <BlogContainer blogId={match.params.id} />}
-              />
+              <NewBlogFormContainer />
+
             </Container>
-
-            <NewBlogFormContainer />
-
-          </Container>
+          </ScrollToTop>
         </Router>
       </div>
 

@@ -7,7 +7,7 @@ import BlogListItem from './blogList/BlogListItem'
 const BlogList= ({ blogs }) => {
 
   return (
-    <Card.Group centered>
+    <Card.Group centered itemsPerRow="4" stackable>
       {blogs.map(blog =>
         <BlogListItem key={blog.id} blog={blog} />
       )}
