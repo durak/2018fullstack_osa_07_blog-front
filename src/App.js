@@ -91,7 +91,7 @@ class App extends React.Component {
                     </span>
                   </Menu.Item>
 
-                  <Dropdown item   text={this.props.user.name}>
+                  <Dropdown item text={this.props.user.name}>
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={this.props.toggleSidebar}>Add blog</Dropdown.Item>
                       <Dropdown.Divider />

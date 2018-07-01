@@ -9,7 +9,7 @@ const UserList = ({ users }) => {
   return(
     <div>
       <h1>Users</h1>
-      <Table>
+      <Table unstackable>
         <Table.Body>
           <Table.Row>
             <Table.Cell />

@@ -52,7 +52,8 @@ export const blogDestroy = (blogToDestroy) => {
 export const blogLike = (blogToLike) => {
   return async (dispatch) => {
     try {
-      const updatedBlog = await blogService.update({ ...blogToLike, likes: blogToLike.likes + 1 })
+      const blog = await blogService.getOne(blogToLike.id)
+      const updatedBlog = await blogService.update({ ...blog, likes: blog.likes + 1 })
       dispatch({
         type: 'BLOG_UPDATE',
         blog: updatedBlog

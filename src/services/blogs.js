@@ -18,6 +18,11 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const getOne = (id) => {
+  const request = axios.get(`${baseUrl}/${id}`)
+  return request.then(response => response.data)
+}
+
 const create = async (newBlog) => {
   const response = await axios.post(baseUrl, newBlog, config())
   return response.data
@@ -38,4 +43,4 @@ const destroy = async (blog) => {
   return response
 }
 
-export default { getAll, create, setToken, update, destroy, addComment }
+export default { getAll, create, setToken, update, destroy, addComment, getOne }

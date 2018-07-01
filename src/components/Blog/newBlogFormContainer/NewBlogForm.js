@@ -50,7 +50,7 @@ const NewBlogForm = ({
 
       </Form.Group>
       <Button type="submit">submit</Button>
-      <Button type="reset" onClick={handleCancel}>cancel</Button>
+      <Button negative type="reset" onClick={handleCancel}>cancel</Button>
 
     </Form>
   )
