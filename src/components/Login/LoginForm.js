@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form, Button } from 'semantic-ui-react'
 
@@ -67,3 +68,7 @@ export default connect(
   null,
   { login }
 )(LoginForm)
+
+LoginForm.propTypes = {
+  login: PropTypes.func.isRequired
+}

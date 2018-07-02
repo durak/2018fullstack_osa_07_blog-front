@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Form, Button, Input } from 'semantic-ui-react'
 
 const BlogCommentForm = ({ handleComment }) => {
@@ -39,5 +40,8 @@ const BlogCommentForm = ({ handleComment }) => {
   )
 }
 
-
 export default BlogCommentForm
+
+BlogCommentForm.propTypes = {
+  handleComment: PropTypes.func.isRequired
+}

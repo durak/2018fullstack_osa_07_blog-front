@@ -10,12 +10,6 @@ import { notify } from '../../reducers/notificationReducer'
 import { toggleSidebar } from '../../reducers/sidebarReducer'
 
 class NewBlogFormContainer extends React.Component {
-  static propTypes = {
-    blogCreate: PropTypes.func.isRequired,
-    notify: PropTypes.func.isRequired,
-    sidebar: PropTypes.object.isRequired
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -108,3 +102,10 @@ export default connect(
   mapStateToProps,
   { blogCreate, notify, toggleSidebar }
 )(NewBlogFormContainer)
+
+NewBlogFormContainer.propTypes = {
+  blogCreate: PropTypes.func.isRequired,
+  notify: PropTypes.func.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+  sidebar: PropTypes.object.isRequired
+}

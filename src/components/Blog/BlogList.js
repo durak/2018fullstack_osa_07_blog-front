@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Card } from 'semantic-ui-react'
 
 import BlogListItem from './blogList/BlogListItem'
 
-const BlogList= ({ blogs }) => {
+const BlogList = ({ blogs }) => {
 
   return (
     <div>
@@ -19,7 +20,6 @@ const BlogList= ({ blogs }) => {
 
 }
 
-
 const mapStateToProps = (state) => {
   let sortedBlogs = []
     .concat(state.blogs)
@@ -32,7 +32,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-
 export default connect(
   mapStateToProps
 )(BlogList)
+
+BlogListItem.propTypes = {
+  blogs: PropTypes.arrayOf(PropTypes.object)
+}

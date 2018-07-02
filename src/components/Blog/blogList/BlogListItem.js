@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Card, Icon, Dimmer, Header } from 'semantic-ui-react'
@@ -68,9 +69,13 @@ class BlogListItem extends React.Component {
   }
 }
 
-//export default BlogListItem
-
 export default connect(
   null,
   { blogLike, notify }
 )(BlogListItem)
+
+BlogListItem.propTypes = {
+  blog: PropTypes.object.isRequired,
+  blogLike: PropTypes.func.isRequired,
+  notify: PropTypes.func.isRequired
+}

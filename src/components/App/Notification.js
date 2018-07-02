@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Message } from 'semantic-ui-react'
 
@@ -34,3 +35,8 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps
 )(Notification)
+
+Notification.propTypes = {
+  message: PropTypes.string,
+  type: PropTypes.oneOf(['message', 'error'])
+}

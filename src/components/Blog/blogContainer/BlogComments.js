@@ -1,6 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Comment, Header, Icon } from 'semantic-ui-react'
-
 
 const Blogcomments = ({ blog }) => {
   if (blog === undefined) return null
@@ -25,3 +25,7 @@ const Blogcomments = ({ blog }) => {
 }
 
 export default Blogcomments
+
+Blogcomments.propTypes = {
+  blog: PropTypes.object
+}

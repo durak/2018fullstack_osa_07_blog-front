@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import { List } from 'semantic-ui-react'
@@ -32,3 +33,8 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps
 )(User)
+
+User.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userId: PropTypes.string.isRequired
+}

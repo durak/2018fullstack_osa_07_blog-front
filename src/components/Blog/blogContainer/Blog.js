@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import { Button, Card, Icon } from 'semantic-ui-react'
 
@@ -52,5 +53,11 @@ const Blog = ({ blog, user, handleLike, handleDestroy }) => {
   )
 }
 
-
 export default Blog
+
+Blog.propTypes = {
+  handleDestroy: PropTypes.func.isRequired,
+  handleLike: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  blog: PropTypes.object
+}

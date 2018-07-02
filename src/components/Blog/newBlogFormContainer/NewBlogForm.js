@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Form, Button } from 'semantic-ui-react'
 
 const NewBlogForm = ({
@@ -57,3 +58,13 @@ const NewBlogForm = ({
 }
 
 export default NewBlogForm
+
+NewBlogForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  valid: PropTypes.object.isRequired
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { blogLike, blogDestroy, blogAddComment } from '../../reducers/blogReducer'
@@ -65,3 +66,12 @@ export default connect(
   mapStateToProps,
   { blogLike, blogDestroy, blogAddComment, notify }
 )(BlogContainer)
+
+BlogContainer.propTypes = {
+  user: PropTypes.object.isRequired,
+  blogId: PropTypes.string.isRequired,
+  blogs: PropTypes.arrayOf(PropTypes.object).isRequired,
+  blogLike: PropTypes.func.isRequired,
+  blogAddComment: PropTypes.func.isRequired,
+  notify: PropTypes.func.isRequired
+}
