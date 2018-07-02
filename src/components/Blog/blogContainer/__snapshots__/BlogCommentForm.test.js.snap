@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BlogCommentForm /> renders correcly 1`] = `
+<div>
+  <form
+    action={undefined}
+    className="ui form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="inline field"
+    >
+      <div
+        className="ui input"
+      >
+        <input
+          disabled={undefined}
+          name="comment"
+          onChange={[Function]}
+          tabIndex={undefined}
+          type="text"
+        />
+      </div>
+      <label>
+        <output
+          name="valid"
+          type="text"
+        />
+      </label>
+    </div>
+    <button
+      className="ui button"
+      disabled={undefined}
+      onClick={[Function]}
+      role="button"
+      tabIndex={undefined}
+      type="submit"
+    >
+      add comment
+    </button>
+  </form>
+</div>
+`;

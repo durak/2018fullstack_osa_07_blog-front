@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NewBlogForm /> renders correctly 1`] = `
+<form
+  action={undefined}
+  className="ui form"
+  onSubmit={[Function]}
+>
+  <h1>
+    Add new blog
+  </h1>
+  <div
+    className="equal width fields"
+  >
+    <div
+      className="field"
+    >
+      <label>
+        title
+      </label>
+      <div
+        className="field"
+      >
+        <div
+          className="ui fluid input"
+          content={undefined}
+        >
+          <input
+            disabled={undefined}
+            name="title"
+            onChange={[Function]}
+            required={undefined}
+            tabIndex={undefined}
+            type="text"
+            value="has title"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="field"
+    >
+      <label>
+        author
+      </label>
+      <div
+        className="field"
+      >
+        <div
+          className="ui fluid input"
+          content={undefined}
+        >
+          <input
+            disabled={undefined}
+            name="author"
+            onChange={[Function]}
+            required={undefined}
+            tabIndex={undefined}
+            type="text"
+            value="has author"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="field"
+    >
+      <label>
+        url
+      </label>
+      <div
+        className="field"
+      >
+        <div
+          className="ui fluid input"
+          content={undefined}
+        >
+          <input
+            disabled={undefined}
+            name="url"
+            onChange={[Function]}
+            required={undefined}
+            tabIndex={undefined}
+            type="text"
+            value="has url"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    className="ui button"
+    disabled={undefined}
+    onClick={[Function]}
+    role="button"
+    tabIndex={undefined}
+    type="submit"
+  >
+    submit
+  </button>
+  <button
+    className="ui negative button"
+    disabled={undefined}
+    onClick={[Function]}
+    role="button"
+    tabIndex={undefined}
+    type="reset"
+  >
+    cancel
+  </button>
+</form>
+`;

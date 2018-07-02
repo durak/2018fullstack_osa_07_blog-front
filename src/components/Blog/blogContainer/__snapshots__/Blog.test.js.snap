@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Blog /> renders correcly 1`] = `
+<div>
+  <div
+    className="ui fluid card"
+    href={undefined}
+    onClick={[Function]}
+  >
+    <div
+      className="content"
+    >
+      <h1
+        className="header"
+      >
+        <span
+          className="blogtitle"
+        >
+          test blog
+        </span>
+        <span
+          className="right floated"
+        >
+          <button
+            className="ui negative button blogDelete"
+            disabled={undefined}
+            onClick={[Function]}
+            role="button"
+            style={
+              Object {
+                "display": "",
+              }
+            }
+            tabIndex={undefined}
+          >
+            delete
+          </button>
+        </span>
+      </h1>
+      <div
+        className="meta"
+      >
+        <span>
+          Author: 
+          test author
+        </span>
+      </div>
+      <div
+        className="meta"
+      >
+        <span>
+          Added by: 
+          test user full name
+        </span>
+      </div>
+      <div
+        className="description"
+      >
+        url: 
+        <a
+          href="http://testurl.com"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          http://testurl.com
+        </a>
+      </div>
+    </div>
+    <div
+      className="extra content"
+    >
+      <span>
+        <i
+          aria-hidden="true"
+          className="like icon blogVote"
+          onClick={[Function]}
+        />
+        99
+         votes
+      </span>
+      <span
+        className="right floated"
+      >
+        <i
+          aria-hidden="true"
+          className="comments icon"
+        />
+        0
+         comments
+      </span>
+    </div>
+  </div>
+</div>
+`;

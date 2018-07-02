@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BlogList /> renders correctly 1`] = `
+<div>
+  <h1>
+    Blogs
+  </h1>
+  <div
+    className="ui centered stackable four cards"
+  >
+    <div
+      className="ui card"
+      href={undefined}
+      onClick={[Function]}
+    >
+      <div
+        className="content blurring dimmable"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <div
+          className="header"
+        >
+          <span
+            className="blogtitle"
+          >
+            test blog 1
+          </span>
+        </div>
+        <div
+          className="meta"
+        >
+          <span>
+            by 
+            test author 1
+          </span>
+        </div>
+        <div
+          className="description"
+        >
+          test blog 1
+        </div>
+        <div
+          className="ui inverted dimmer"
+          onClick={[Function]}
+        >
+          <div
+            className="content"
+          >
+            <h2
+              className="ui header"
+            >
+              <a
+                href="/blogs/1"
+                onClick={[Function]}
+              >
+                 View 
+              </a>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div
+        className="extra content"
+      >
+        <span>
+          <i
+            aria-hidden="true"
+            className="like icon blogVote"
+            onClick={[Function]}
+          />
+          99
+           votes
+        </span>
+        <span
+          className="right floated"
+        >
+          <i
+            aria-hidden="true"
+            className="comments icon"
+          />
+          2
+           comments
+        </span>
+      </div>
+    </div>
+    <div
+      className="ui card"
+      href={undefined}
+      onClick={[Function]}
+    >
+      <div
+        className="content blurring dimmable"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <div
+          className="header"
+        >
+          <span
+            className="blogtitle"
+          >
+            test blog 2
+          </span>
+        </div>
+        <div
+          className="meta"
+        >
+          <span>
+            by 
+            test author 2
+          </span>
+        </div>
+        <div
+          className="description"
+        >
+          test blog 2
+        </div>
+        <div
+          className="ui inverted dimmer"
+          onClick={[Function]}
+        >
+          <div
+            className="content"
+          >
+            <h2
+              className="ui header"
+            >
+              <a
+                href="/blogs/2"
+                onClick={[Function]}
+              >
+                 View 
+              </a>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div
+        className="extra content"
+      >
+        <span>
+          <i
+            aria-hidden="true"
+            className="like icon blogVote"
+            onClick={[Function]}
+          />
+          99
+           votes
+        </span>
+        <span
+          className="right floated"
+        >
+          <i
+            aria-hidden="true"
+            className="comments icon"
+          />
+          2
+           comments
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

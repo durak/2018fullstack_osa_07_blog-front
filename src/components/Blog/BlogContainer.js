@@ -9,7 +9,7 @@ import Blog from './blogContainer/Blog'
 import BlogComments from './blogContainer/BlogComments'
 import BlogCommentForm from './blogContainer/BlogCommentForm'
 
-const BlogContainer = ({
+export const BlogContainer = ({
   user,
   blogId,
   blogs,

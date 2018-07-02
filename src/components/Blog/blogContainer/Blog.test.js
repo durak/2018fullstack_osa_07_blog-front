@@ -1,8 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import renderer from 'react-test-renderer'
 import Blog from './Blog'
-import { debug } from 'util'
-import { Button, Card, Icon } from 'semantic-ui-react'
+
+
 
 describe('<Blog />', () => {
 
@@ -41,6 +42,18 @@ describe('<Blog />', () => {
       .findWhere(n => n.text().includes(text))
       .hostNodes()
   }
+
+  it('renders correcly', () => {
+    const tree = renderer.create(
+      <Blog 
+      blog={blog}
+      user={user}
+      handleDestroy={mockHandleDestroy}
+      handleLike={mockHandleLike}
+      />
+    ).toJSON();
+    expect(tree).toMatchSnapshot()
+  })
 
   it ('without valid blog redirect is returned', () => {
     const returnComponent = shallow(

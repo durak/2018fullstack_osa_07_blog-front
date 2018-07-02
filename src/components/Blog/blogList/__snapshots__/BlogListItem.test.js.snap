@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BlogListItem /> renders correctly 1`] = `
+<div
+  className="ui card"
+  href={undefined}
+  onClick={[Function]}
+>
+  <div
+    className="content blurring dimmable"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="header"
+    >
+      <span
+        className="blogtitle"
+      >
+        test blog
+      </span>
+    </div>
+    <div
+      className="meta"
+    >
+      <span>
+        by 
+        test author
+      </span>
+    </div>
+    <div
+      className="description"
+    >
+      test blog
+    </div>
+    <div
+      className="ui inverted dimmer"
+      onClick={[Function]}
+    >
+      <div
+        className="content"
+      >
+        <h2
+          className="ui header"
+        >
+          <a
+            href="/blogs/ifj430foewf"
+            onClick={[Function]}
+          >
+             View 
+          </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div
+    className="extra content"
+  >
+    <span>
+      <i
+        aria-hidden="true"
+        className="like icon blogVote"
+        onClick={[Function]}
+      />
+      99
+       votes
+    </span>
+    <span
+      className="right floated"
+    >
+      <i
+        aria-hidden="true"
+        className="comments icon"
+      />
+      2
+       comments
+    </span>
+  </div>
+</div>
+`;

@@ -1,13 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Card, Icon, Dimmer, Header } from 'semantic-ui-react'
 
-import { blogLike } from '../../../reducers/blogReducer'
-import { notify } from '../../../reducers/notificationReducer'
-
-class BlogListItem extends React.Component {
+export class BlogListItem extends React.Component {
   state = {}
 
   handleShow = () => this.setState({ active: true })
@@ -31,7 +27,7 @@ class BlogListItem extends React.Component {
           onMouseLeave={this.handleHide}
         >
           <Card.Header>
-            {blog.title}
+            <span className="blogtitle">{blog.title}</span>
           </Card.Header>
 
           <Card.Meta>
@@ -53,8 +49,8 @@ class BlogListItem extends React.Component {
         </Dimmer.Dimmable>
 
         <Card.Content extra>
-          <span onClick={this.handleLike(blog)}>
-            <Icon name="like" />
+          <span>
+            <Icon name="like" onClick={this.handleLike(blog)} className="blogVote" />
             {blog.likes} votes
           </span>
           <span className="right floated">
@@ -64,15 +60,10 @@ class BlogListItem extends React.Component {
 
       </Card>
     )
-
-
   }
 }
 
-export default connect(
-  null,
-  { blogLike, notify }
-)(BlogListItem)
+export default BlogListItem
 
 BlogListItem.propTypes = {
   blog: PropTypes.object.isRequired,

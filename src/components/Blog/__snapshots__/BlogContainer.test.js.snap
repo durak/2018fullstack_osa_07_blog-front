@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BlogContainer /> renderss correctly 1`] = `
+<div>
+  <div>
+    <div
+      className="ui fluid card"
+      href={undefined}
+      onClick={[Function]}
+    >
+      <div
+        className="content"
+      >
+        <h1
+          className="header"
+        >
+          <span
+            className="blogtitle"
+          >
+            test blog 1
+          </span>
+          <span
+            className="right floated"
+          >
+            <button
+              className="ui negative button blogDelete"
+              disabled={undefined}
+              onClick={[Function]}
+              role="button"
+              style={
+                Object {
+                  "display": "",
+                }
+              }
+              tabIndex={undefined}
+            >
+              delete
+            </button>
+          </span>
+        </h1>
+        <div
+          className="meta"
+        >
+          <span>
+            Author: 
+            test author 1
+          </span>
+        </div>
+        <div
+          className="meta"
+        >
+          <span>
+            Added by: 
+            test user full name 1
+          </span>
+        </div>
+        <div
+          className="description"
+        >
+          url: 
+          <a
+            href="http://testurl.com 1"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            http://testurl.com 1
+          </a>
+        </div>
+      </div>
+      <div
+        className="extra content"
+      >
+        <span>
+          <i
+            aria-hidden="true"
+            className="like icon blogVote"
+            onClick={[Function]}
+          />
+          99
+           votes
+        </span>
+        <span
+          className="right floated"
+        >
+          <i
+            aria-hidden="true"
+            className="comments icon"
+          />
+          2
+           comments
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ui comments"
+  >
+    <h3
+      className="ui dividing header"
+    >
+      Comments
+    </h3>
+    <div
+      className="comment"
+    >
+      <i
+        aria-hidden="true"
+        className="caret right icon avatar"
+      />
+      <div
+        className="content"
+      >
+        <div
+          className="text"
+        >
+          some comment content
+        </div>
+      </div>
+    </div>
+    <div
+      className="comment"
+    >
+      <i
+        aria-hidden="true"
+        className="caret right icon avatar"
+      />
+      <div
+        className="content"
+      >
+        <div
+          className="text"
+        >
+          some other content
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <form
+      action={undefined}
+      className="ui form"
+      onSubmit={[Function]}
+    >
+      <div
+        className="inline field"
+      >
+        <div
+          className="ui input"
+        >
+          <input
+            disabled={undefined}
+            name="comment"
+            onChange={[Function]}
+            tabIndex={undefined}
+            type="text"
+          />
+        </div>
+        <label>
+          <output
+            name="valid"
+            type="text"
+          />
+        </label>
+      </div>
+      <button
+        className="ui button"
+        disabled={undefined}
+        onClick={[Function]}
+        role="button"
+        tabIndex={undefined}
+        type="submit"
+      >
+        add comment
+      </button>
+    </form>
+  </div>
+</div>
+`;

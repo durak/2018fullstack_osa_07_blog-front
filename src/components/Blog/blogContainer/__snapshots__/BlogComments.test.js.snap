@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BlogComments /> renders correctly 1`] = `
+<div
+  className="ui comments"
+>
+  <h3
+    className="ui dividing header"
+  >
+    Comments
+  </h3>
+  <div
+    className="comment"
+  >
+    <i
+      aria-hidden="true"
+      className="caret right icon avatar"
+    />
+    <div
+      className="content"
+    >
+      <div
+        className="text"
+      >
+        some comment content fdlskjflskdjflksdflk
+      </div>
+    </div>
+  </div>
+  <div
+    className="comment"
+  >
+    <i
+      aria-hidden="true"
+      className="caret right icon avatar"
+    />
+    <div
+      className="content"
+    >
+      <div
+        className="text"
+      >
+        some comment content gfsgjirojsgldfjglkdf
+      </div>
+    </div>
+  </div>
+</div>
+`;
