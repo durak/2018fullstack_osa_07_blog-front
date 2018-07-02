@@ -35,7 +35,7 @@ class LoginForm extends React.Component {
 
     return (
       <div >
-        <h2> Kirjaudu sisään </h2>
+        <h2> Log in </h2>
         <Form onSubmit={this.handleSubmit}>
 
           <Form.Field>
@@ -57,7 +57,7 @@ class LoginForm extends React.Component {
               onChange={this.handleChange}
             />
           </Form.Field>
-          <Button type="submit">kirjaudu</Button>
+          <Button type="submit">submit</Button>
         </Form>
       </div >
     )
