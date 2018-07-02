@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Blog from './Blog'
 import { debug } from 'util'
+import { Button, Card, Icon } from 'semantic-ui-react'
 
 describe('<Blog />', () => {
 
@@ -14,7 +15,8 @@ describe('<Blog />', () => {
     author: 'test author',
     url: 'http://testurl.com',
     likes: 99,
-    user: { name: 'test user full name', username: 'testusername' }
+    user: { name: 'test user full name', username: 'testusername' },
+    comments: []
   }
 
   const user = {
@@ -32,50 +34,38 @@ describe('<Blog />', () => {
     )
   })
 
+  const findHostNodeWithText = (component, text, element) => {
+    return component
+      //.find('div')      
+      //.findWhere(n => n.type() === element && n.text().includes(text))
+      .findWhere(n => n.text().includes(text))
+      .hostNodes()
+  }
 
-  it('at start displays blog author and title', () => {
-    const minimizedDiv = blogComponent.find('.minimized')
-    expect(minimizedDiv.text()).toContain(blog.author)
-    expect(minimizedDiv.text()).toContain(blog.title)
+  it ('without valid blog redirect is returned', () => {
+    const returnComponent = shallow(
+      <Blog        
+        user={user}
+        handleDestroy={mockHandleDestroy}
+        handleLike={mockHandleLike}
+      />
+    )
+    
+    expect(returnComponent.text()).toContain('<Redirect />')
   })
 
-  it('at start full blog information is not shown', () => {
-    const maximizedDiv = blogComponent.find('.maximized')
+  it('at start displays blog author, title, url and user who added the blog', () => {
+    const titleNode = blogComponent.find('.blogtitle')
+    const authorNode = findHostNodeWithText(blogComponent, 'Author')
+    const addedByNode = findHostNodeWithText(blogComponent, 'Added by')
+    const urlNode = findHostNodeWithText(blogComponent, 'url')
 
-    expect(maximizedDiv.getElement().props.style).toEqual({ display: 'none' })
-    expect(maximizedDiv.prop('style')).toEqual({ display: 'none' })
-    expect(maximizedDiv.props().style).toEqual({ display: 'none' })
-
-  })
-
-  it('after clicking the title / author all information about blog is shown', () => {
-    const clickable = blogComponent.find('.minimized').find('.clickable')
-    clickable.simulate('click')
-
-    const maximizedDiv = blogComponent.find('.maximized')
-    expect(maximizedDiv.prop('style')).toEqual({ display: '' })
-  })
-
-  it('blog is minimized again after clicking on a maximized blog', () => {
-    let clickable = blogComponent.find('.minimized').find('.clickable')
-    clickable.simulate('click')
-
-    const maximizedClickable = blogComponent.find('.maximized').find('.clickable')
-    maximizedClickable.simulate('click')
-
-    const maximizedDiv = blogComponent.find('.maximized')
-    expect(maximizedDiv.prop('style')).toEqual({ display: 'none' })
-  })
-
-  it('clicking the like button calls like handler function', () => {
-    const button = blogComponent.find('button')
-    button.at(0).simulate('click')
-    expect(mockHandleLike.mock.calls.length).toBe(1)
-  })
-
-  it('blog is shown added by correct user when blog contains user information', () => {
-    const addedBy = blogComponent.find('.addedBy')
-    expect(addedBy.text()).toContain(`added by ${blog.user.name}`)
+    expect(titleNode.text()).toContain(blog.title)
+    expect(authorNode.text()).toContain(blog.author)
+    expect(authorNode.is('span')).toEqual(true)
+    expect(addedByNode.text()).toContain(blog.user.name)
+    expect(urlNode.text()).toContain(blog.url)
+    expect(urlNode.is('a')).toEqual(true)
   })
 
   it('blog is shown added by anonymous when blog does not contain user information', () => {
@@ -90,13 +80,25 @@ describe('<Blog />', () => {
       />
     )
 
-    const addedBy = anonymousBlogComponent.find('.addedBy')
-    expect(addedBy.text()).toContain('added by anonymous')
+    const addedByNode = findHostNodeWithText(anonymousBlogComponent, 'Added by')
+    expect(addedByNode.text()).toContain('anonymous')
+  })
+
+  it('clicking the like button calls like handler function', () => {
+    const like = blogComponent.find('.blogVote')    
+    like.at(0).simulate('click')
+    expect(mockHandleLike.mock.calls.length).toBe(1)
   })
 
   it('delete button is shown when user has added the blog themselves', () => {
-    const deleteDiv = blogComponent.find('.destroy')
-    expect(deleteDiv.prop('style')).toEqual({ display: '' })
+    const deleteNode = blogComponent.find('.blogDelete')        
+    expect(deleteNode.prop('style')).toEqual({ display: '' }) 
+  })
+
+  it('clickling delete nutton calls handler function', () => {
+    const deleteNode = blogComponent.find('.blogDelete')        
+    deleteNode.simulate('click')
+    expect(mockHandleDestroy.mock.calls.length).toBe(1)
   })
 
   it('delete button is shown on anonymous blogs', () => {
@@ -111,13 +113,12 @@ describe('<Blog />', () => {
       />
     )
 
-    const deleteDiv = blogComponent.find('.destroy')
-    expect(deleteDiv.prop('style')).toEqual({ display: '' })
+    const deleteNode = anonymousBlogComponent.find('.blogDelete')        
+    expect(deleteNode.prop('style')).toEqual({ display: '' }) 
   })
 
   it('delete button is hidden when user has not added the blog', () => {
     let anotherUserBlog = { ...blog, user: { name: 'someone else', username: 'someothername' } }
-    
     const anotherUserBlogComponent = shallow(
       <Blog
         blog={anotherUserBlog}
@@ -127,9 +128,8 @@ describe('<Blog />', () => {
       />
     )
 
-    const deleteDiv = anotherUserBlogComponent.find('.destroy')
-    expect(deleteDiv.prop('style')).toEqual({ display: 'none' })
-  })
-
+    const deleteNode = anotherUserBlogComponent.find('.blogDelete')        
+    expect(deleteNode.prop('style')).toEqual({ display: 'none' }) 
+  })  
 
 })

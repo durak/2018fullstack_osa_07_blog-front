@@ -14,9 +14,9 @@ const Blog = ({ blog, user, handleLike, handleDestroy }) => {
       <Card fluid>
         <Card.Content>
           <Card.Header as="h1">
-            {blog.title}
+            <span className="blogtitle">{blog.title}</span>
             <span className="right floated">
-              <Button negative style= {destroyButtonVisible} onClick={handleDestroy}>delete</Button>
+              <Button negative style= {destroyButtonVisible} onClick={handleDestroy} className="blogDelete">delete</Button>
             </span>
           </Card.Header>
 
@@ -28,7 +28,7 @@ const Blog = ({ blog, user, handleLike, handleDestroy }) => {
 
           <Card.Meta>
             <span>
-          Added by: {blog.user.name}
+          Added by: {blog.user ? blog.user.name : 'anonymous'}
             </span>
           </Card.Meta>
 
@@ -38,8 +38,8 @@ const Blog = ({ blog, user, handleLike, handleDestroy }) => {
         </Card.Content>
 
         <Card.Content extra>
-          <span onClick={handleLike}>
-            <Icon name="like" />
+          <span>
+            <Icon name="like" onClick={handleLike} className="blogVote" />
             {blog.likes} votes
           </span>
 
