@@ -6,5 +6,5 @@ DEMO:
 
 user: user  |  password: password
 
-Front end:
+Back end:
 [https://github.com/durak/2018fullstack_osa_07_blog-backend](https://github.com/durak/2018fullstack_osa_07_blog-backend)
