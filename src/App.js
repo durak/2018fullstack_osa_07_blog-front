@@ -42,7 +42,7 @@ class App extends React.Component {
   async componentDidMount() {
     // User was found in localStorage
     if (this.props.user) {
-      console.log('----USER FROM LOCAL STORAGE---')
+      // console.log('----USER FROM LOCAL STORAGE---')
       this.initUsersAndBlogs()
     }
   }
@@ -50,7 +50,7 @@ class App extends React.Component {
   async componentDidUpdate(prevProps) {
     // User was not in localStorage and logged in
     if (prevProps.user !== this.props.user && this.props.user) {
-      console.log('----USER LOGGED IN---')
+      // console.log('----USER LOGGED IN---')
       this.initUsersAndBlogs()
     }
   }
